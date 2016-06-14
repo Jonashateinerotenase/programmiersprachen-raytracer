@@ -11,13 +11,26 @@ Shape(),
 min_{min},
 max_{max}
 {}
+Box::Box(glm::vec3 const& min, glm::vec3 const& max, std::string const& name, Color const& farbe):
+Shape {name, farbe},
+min_{min},
+max_{max}
+{}
+
+
 
 float Box::area() const {
-  return 0;
+	float a=max_.x-min_.x;
+	float b=max_.y-min_.y;
+	float c=max_.z-min_.z;
+  return 2*a*b+2*a*c+2*b*c;
 }
 
 float Box::volume() const {
-  return 0;
+	float a=max_.x-min_.x;
+	float b=max_.y-min_.y;
+	float c=max_.z-min_.z;
+  return a*b*c;
 }
 
 glm::vec3 const& Box::min() const
