@@ -1,4 +1,5 @@
 #include "sphere.hpp"
+#include <cmath>
 
 Sphere::Sphere():
 Shape(),
@@ -19,11 +20,11 @@ r_{r}
 {}
 
 float Sphere::area() const {
-  return 4*3/*.1415926536*/*(r_*r_);
+  return 4.0f * M_PI * r_*r_;
 }
 
 float Sphere::volume() const {
-  return ((4/3)*3/*.1415926536*/*(r_*r_*r_));
+  return 4.0f/3.0f * M_PI * r_*r_*r_;
 }
 
 glm::vec3 const& Sphere::middle() const
@@ -34,4 +35,12 @@ glm::vec3 const& Sphere::middle() const
 float const& Sphere::rad() const
 {
   return r_;
+}
+
+std::ostream& Sphere::print(std::ostream& os) const{
+	Shape::print(os);
+        os <<"Radius: "<< r_ << " \n"<< "mitte: ("<<middle_.x
+	<< ", "<<middle_.y
+  	<< ", "<<middle_.z
+	<< ")\n";
 }

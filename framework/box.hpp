@@ -14,6 +14,7 @@ public:
   float volume() const override;
   glm::vec3 const& min() const;
   glm::vec3 const& max() const;
+  std::ostream& print(std::ostream& os) const override;
 private:
   glm::vec3 min_;
   glm::vec3 max_;

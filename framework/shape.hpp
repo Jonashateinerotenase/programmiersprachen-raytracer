@@ -10,17 +10,15 @@ public:
   virtual float volume() const =0;
   std::string getname() const;
   Color const& getcolor() const;
-  /*virtual std::ostream& print(std::ostream& os) const;*/
+  virtual std::ostream& print(std::ostream& os) const;
  private:
   std::string name_;
   Color color_;
 
 };
 
-/*std::ostream& operator<<(std::ostream& os, Shape const& s)
-{
-	// not implemented JET
-}*/
+std::ostream& operator<<(std::ostream& os, Shape const& s);
+
 //-> nur auf linux geht hier in windows nich deswegen im lintpool fertig machen du fgt
 
 

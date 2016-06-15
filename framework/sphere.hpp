@@ -14,6 +14,8 @@ public:
   float volume() const override;
   glm::vec3 const& middle() const;
   float const& rad() const;
+  std::ostream& print(std::ostream& os) const override;
+  //bool intersect const&(glm::vec3 const& ori, glm::vec3 const& dir,....);
 private:
   glm::vec3 middle_;
   float r_;
