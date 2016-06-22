@@ -10,7 +10,7 @@ Shape::Shape(std::string const& name, Color const& farbe):
   color_{farbe}
 {}
 
-std::string Shape::getname() const{
+std::string const& Shape::getname() const{
 	return name_;
 }
 Color const& Shape::getcolor() const{

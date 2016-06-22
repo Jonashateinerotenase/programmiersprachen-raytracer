@@ -1,6 +1,7 @@
 #include "sphere.hpp"
 #include <cmath>
 
+
 Sphere::Sphere():
 Shape(),
 middle_{0.0f,0.0f,0.0f},
@@ -32,7 +33,7 @@ glm::vec3 const& Sphere::middle() const
   return middle_;
 }
 
-float const& Sphere::rad() const
+float Sphere::rad() const
 {
   return r_;
 }
@@ -43,4 +44,8 @@ std::ostream& Sphere::print(std::ostream& os) const{
 	<< ", "<<middle_.y
   	<< ", "<<middle_.z
 	<< ")\n";
+}
+
+bool Sphere::intersect(Ray const& ray, float& distance) {
+return glm::intersectRaySphere(ray.origin, ray.direction, middle_, r_*r_, distance);
 }

@@ -2,13 +2,16 @@
 #define SHAPE_HPP
 #include "color.hpp"
 #include <string>
+#include <glm/glm.hpp>
+#include <glm/gtx/intersect.hpp>
 class Shape{
 public:
   Shape();
   Shape(std::string const& name, Color const& color);
+
   virtual float area() const =0;
   virtual float volume() const =0;
-  std::string getname() const;
+  std::string const& getname() const;
   Color const& getcolor() const;
   virtual std::ostream& print(std::ostream& os) const;
  private:
