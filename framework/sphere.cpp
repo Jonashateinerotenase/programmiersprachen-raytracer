@@ -14,8 +14,8 @@ middle_{middle},
 r_{r}
 {}
 
-Sphere::Sphere(glm::vec3 const& middle, float r, std::string const& name, Color const& farbe):
-Shape(name, farbe),
+Sphere::Sphere(glm::vec3 const& middle, float r, std::string const& name, Material const& mat):
+Shape(name, mat),
 middle_{middle},
 r_{r}
 {}

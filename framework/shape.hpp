@@ -4,25 +4,27 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
+#include "ray.hpp"
+#include "material.hpp"
 class Shape{
 public:
   Shape();
-  Shape(std::string const& name, Color const& color);
+  Shape(std::string const& name, Material const& mat_);
 
   virtual float area() const =0;
   virtual float volume() const =0;
+  virtual bool intersect(Ray const& ray, float& t) =0;
   std::string const& getname() const;
-  Color const& getcolor() const;
+  Material const& getmaterial() const;
   virtual std::ostream& print(std::ostream& os) const;
  private:
   std::string name_;
-  Color color_;
+  Material mat_;
 
 };
 
 std::ostream& operator<<(std::ostream& os, Shape const& s);
 
-//-> nur auf linux geht hier in windows nich deswegen im lintpool fertig machen du fgt
 
 
 #endif //#define SHAPE_HPP

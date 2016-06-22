@@ -30,7 +30,7 @@ REQUIRE(distance == Approx(4.0f));
 
 
 
-
+/*
 
 TEST_CASE("box default test", "[box]")
 {
@@ -101,13 +101,13 @@ TEST_CASE("printsphere", "[sphere]")
   glm::vec3 fgt2{1.0f,1.0f,1.0f};
   glm::vec3 fgt3{1.0f,1.0f,1.0f};
   std::string hs2 = "Herodes";
-  Color farbi2{0.198f,0.146f,0.082fgit};
+  Color farbi2{0.198f,0.146f,0.082f};
   Box h{fgt2,fgt3,hs2,farbi2};
   h.print(ss);
   h.print(std::cout);
 
 }
-
+*/
 //Sphere(glm::vec3 const& middle, float r, std::string const& name, Color const& farbe);
 
 int main(int argc, char *argv[])

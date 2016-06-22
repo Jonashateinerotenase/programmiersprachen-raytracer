@@ -2,24 +2,24 @@
 
 Shape::Shape():
 	name_{"xxx"},
-	color_{0.0f,0.0f,0.0f}
+	mat_{}
 {}
 
-Shape::Shape(std::string const& name, Color const& farbe):
+Shape::Shape(std::string const& name, Material const& mati):
   name_{name},
-  color_{farbe}
+  mat_{mati}
 {}
 
 std::string const& Shape::getname() const{
 	return name_;
 }
-Color const& Shape::getcolor() const{
-	return color_;
+Material const& Shape::getmaterial() const{
+	return mat_;
 }
 
 
 std::ostream& Shape::print(std::ostream& os) const{
-	os << "name: " << name_<< "\n" << "color: " << color_;
+	os << "name: " << name_<< "\n" << "material: " << mat_;
  	return os;
 }
 

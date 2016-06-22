@@ -11,8 +11,8 @@ Shape(),
 min_{min},
 max_{max}
 {}
-Box::Box(glm::vec3 const& min, glm::vec3 const& max, std::string const& name, Color const& farbe):
-Shape {name, farbe},
+Box::Box(glm::vec3 const& min, glm::vec3 const& max, std::string const& name, Material const& mat):
+Shape {name, mat},
 min_{min},
 max_{max}
 {}
@@ -51,4 +51,8 @@ std::ostream& Box::print(std::ostream& os) const{
 	<< ") max: ("<<max_.x
 	<< ", "<<max_.y
 	<< ", "<<max_.z << ")\n";
+}
+
+bool Box::intersect(Ray const& ray, float& distance) {
+return 0;
 }
