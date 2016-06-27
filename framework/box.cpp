@@ -53,6 +53,7 @@ std::ostream& Box::print(std::ostream& os) const{
 	<< ", "<<max_.z << ")\n";
 }
 
-bool Box::intersect(Ray const& ray, float& distance) {
+/*bool Box::intersect(Ray const& ray) {
 return 0;
 }
+*/
