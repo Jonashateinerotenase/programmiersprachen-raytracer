@@ -21,11 +21,11 @@ r_{r}
 {}
 
 float Sphere::area() const {
-  return 4.0f * M_PI * r_*r_;
+  return 4.0f * /*M_PI*/3.1415f * r_*r_;
 }
 
 float Sphere::volume() const {
-  return 4.0f/3.0f * M_PI * r_*r_*r_;
+  return 4.0f/3.0f * /*M_PI*/3.1415f * r_*r_*r_;
 }
 
 glm::vec3 const& Sphere::middle() const
