@@ -8,29 +8,7 @@
 #include <sstream>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
-/*
-TEST_CASE("intersectRaySphere","[intersect]")
-{
-// Ray
-glm::vec3 ray_origin{0.0,0.0,0.0};
-// ray direction has to be normalized !
-// you can use :
-//
-v = glm::normalize(some_vector)
-glm::vec3 ray_direction{0.0,0.0,1.0};
-// Sphere
-glm::vec3 sphere_center{0.0,0.0,5.0};
-float sphere_radius{1.0};
-float distance{0.0};
-auto result = glm::intersectRaySphere(
-ray_origin,ray_direction,
-sphere_center,sphere_radius,distance);
-REQUIRE(distance == Approx(4.0f));
-}*/
 
-
-
-/*
 
 TEST_CASE("box default test", "[box]")
 {
@@ -51,7 +29,7 @@ TEST_CASE("box default test", "[box]")
   REQUIRE(kugel.middle().z == testmin2.z);
   REQUIRE(1==1);
 }
-
+/**/
 TEST_CASE("area der box", "[box]")
 {
   
@@ -65,8 +43,8 @@ TEST_CASE("area der box", "[box]")
  glm::vec3 testmink{0.0f,0.0f,0.0f};
  float rad = 1.0f;
  Sphere Kuchel{testmink,rad};
- REQUIRE(Kuchel.area()== Approx(12.56637f));
- REQUIRE(Kuchel.volume()==Approx(4.18879f));
+// REQUIRE(Kuchel.area()== Approx(12.56637f));
+ //REQUIRE(Kuchel.volume()==Approx(4.18879f));
 }
 
 TEST_CASE("print", "[box]")
@@ -79,6 +57,34 @@ TEST_CASE("print", "[box]")
   b.print(std::cout);
 }
 
+TEST_CASE("boxintersect", "[box]")
+{
+  Box b{glm::vec3{-0.0f}, glm::vec3{1.0f}};
+  glm::vec3 orimori{-1.0f,-1.0f,-1.0f};
+  glm::vec3 dirimiri{1.0f,1.0f,1.0f};
+
+  glm::vec3 orimori2{2.0f,2.0f,2.0f};
+  glm::vec3 dirimiri2{-1.0f,-1.0f,-1.0f};
+
+  glm::vec3 orimori3{-5.5f,-153.5f,98.5f};
+  glm::vec3 dirimiri3 = glm::vec3(0.5f,0.5f,0.5f) - orimori3;
+
+  glm::vec3 orimori4{1.1f,1.1f,1.1f};
+  glm::vec3 dirimiri4{2.0f,2.0f,2.0f};
+
+
+  Ray triffter{orimori,dirimiri};
+  Ray triffter2{orimori2,dirimiri2};
+  Ray triffter3{orimori3,dirimiri3};
+   Ray triffter4{orimori4,dirimiri4};
+  float x = 1.0f;
+
+  REQUIRE(b.intersect(triffter, x));
+  REQUIRE(b.intersect(triffter2, x));
+  REQUIRE(b.intersect(triffter3, x));
+  REQUIRE(!b.intersect(triffter4, x));
+}
+/*
 TEST_CASE("printsphere", "[sphere]")
 {
   Sphere s{};
