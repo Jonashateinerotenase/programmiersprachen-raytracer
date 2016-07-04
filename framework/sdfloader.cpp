@@ -5,10 +5,12 @@
 #include <string>
 #include <map>
 #include "material.hpp"
+#include "scene.hpp"
+
 int main () {
   std::string line;
   std::ifstream myfile ("../../../scene/scene1.txt");
-  std::map<std::string,Material> materials;
+//  Scene scene1;
   if (myfile.is_open())
   {
     while ( getline (myfile,line) )
