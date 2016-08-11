@@ -11,23 +11,48 @@
 struct Scene{
 
 	Scene():
-	fliename{"defaultscene.ppm"},
-	//camera{},
+	filename{"defaultscene.ppm"},
+//	camera{},
 	amblight{},
 	background{},
-	materials{},
-	//lights{},
-	shapes{}
+//	materials{},
+//	lights{},
+//	shapes{}
 	{}
+
+	Scene(
+	std::string const& fname,
+//	Camera cam,
+    Color const& al,
+    Color const& bg
+//	std::map<std::string, std::shared_ptr<Material>> materials_map,
+//	std::vector<std::shared_ptr<Light>> lights_vec,
+//	std::vector<std::shared_ptr<Shape>> shapes):
+    :
+
+	filename{fname},
+	//camera{cam},
+	amblight{al},
+	background{bg},
+	//materials{},
+	//lights{},
+	//shapes_ptr{shapes}
+	{        
+	//	materials.swap(materials_map);
+    //    lights.swap(lights_vec)
+    }
 
 	std::string filename;
 //	std::Camera camera;
-	std::map<std::string, Material> materials;
-	std::vector<Shape> shapes;
-	//std::std::vector<Light> lights;
+//	std::map<std::string, Material> materials;	
+//	std::map<std::string, std::shared_ptr<Material>> materials;	
+//	std::vector<Shape> shapes_ptr;
+//	std::vector<std::shared_ptr<Shape>> shapes_ptr;
+//	std::std::vector<Light> lights;
+//	std::std::vector<shared_ptr<Light>> lights;
 	Color amblight;
 	Color background;
 
-}
+};
 
 #endif //#define SHAPE_HPP
