@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <glm/vec3.hpp>
+#include <class T>
 #include "material.hpp"
 #include "scene.hpp"
 #include "box.hpp"
@@ -17,6 +18,7 @@
 int main () {
   std::string line;
   std::ifstream myfile ("../../../scene/scene1.txt");
+  std::map<std::string, std::shared_ptr<Material>> materials;
 //  Scene scene1;
   if (myfile.is_open())
   {
@@ -40,7 +42,9 @@ int main () {
 	ss>>mat.kd.g;
         ss>>mat.kd.b;
 	ss>>mat.m;
-	materials[mat.name]= mat;
+	std::shared_ptr<Material> temp_ptr = std::make_shared<Material>(Material{name, ka, kd, ks, m});
+  materials.insert({name, temp_ptr});
+  //materials[mat.name]= mat;
 	std::cout << mat;
     }
     myfile.close();
