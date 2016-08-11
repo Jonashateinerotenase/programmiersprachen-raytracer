@@ -9,6 +9,7 @@
 #include "scene.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
+#include "shape.hpp"
 #include <memory>
 //#include "sdfloader.hpp"
 //#include "camera.hpp"
@@ -19,6 +20,7 @@ int main () {
   std::string line;
   std::ifstream myfile ("../../../scene/scene1.txt");
   std::map<std::string, std::shared_ptr<Material>> materials;
+  std::map<std::string, std::shared_ptr<Shape>> shapes;
 //  Scene scene1;
   if (myfile.is_open())
   {
@@ -27,7 +29,7 @@ int main () {
       //std::cout << line << '\n';
       std::stringstream ss;
   	  ss << line;
-  	  Material mat;
+  	 
   	  std::string keyword;
   
   	  ss>>keyword;
@@ -36,6 +38,7 @@ int main () {
       if(keyword == "define"){
      	    ss>>keyword;
           if(keyword == "material"){
+            Material mat;
             ss>>mat.name;
      	      ss>>mat.ka.r;
      	      ss>>mat.ka.g;
@@ -57,11 +60,24 @@ int main () {
           }
           if(keyword == "shape"){
             ss>>keyword;
+
+
             if(keyword == "box"){
 
             }
             if(keyword == "sphere"){
-
+            Sphere sph;
+              //ss>>sph.name_;
+              //ss>>sph.middle_.x;
+              //ss>>sph.middle_.y;
+              //ss>>sph.middle_.z;
+              //ss>>sph.r_;
+              //std::string mat_name;
+              //ss>>mat_name;
+              //sph.mat_=*materials(mat_name);
+              //std::shared_ptr<Shape> temp_ptr = std::make_shared<Shape>(sph);
+              //shapes.insert({sph.name, temp_ptr});
+            // std::cout << sph;
             }
 
           }

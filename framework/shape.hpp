@@ -17,7 +17,6 @@ public:
   std::string const& getname() const;
   Material const& getmaterial() const;
   virtual std::ostream& print(std::ostream& os) const;
- private:
   std::string name_;
   Material mat_;
 
