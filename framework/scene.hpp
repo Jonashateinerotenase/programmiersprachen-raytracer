@@ -5,9 +5,9 @@
 #include <vector>
 #include "shape.hpp"
 #include <memory>
-//#include "material.hpp"
+#include <vector>
 //#include "camera.hpp"
-//#include "light.hpp"
+#include "light.hpp"
 
 struct Scene{
 
@@ -17,7 +17,7 @@ struct Scene{
 	amblight{},
 	background{},
 	materials{}
-//	lights{},
+	lights{},
 //	shapes{}
 	{}
 
@@ -27,7 +27,7 @@ struct Scene{
     Color const& al,
     Color const& bg,
 	std::map<std::string, std::shared_ptr<Material>> materials_map
-//	std::vector<std::shared_ptr<Light>> lights_vec,
+	std::vector<std::shared_ptr<Light>> lights_vec,
 //	std::vector<std::shared_ptr<Shape>> shapes):
     ):
 
@@ -36,7 +36,7 @@ struct Scene{
 	amblight{al},
 	background{bg},
 	materials{materials_map}
-	//lights{},
+	lights{lights_vec},
 	//shapes_ptr{shapes}
 	{        
 	//	materials.swap(materials_map);
@@ -51,7 +51,7 @@ struct Scene{
 //	std::vector<Shape> shapes_ptr;
 //	std::vector<std::shared_ptr<Shape>> shapes_ptr;
 //	std::std::vector<Light> lights;
-//	std::std::vector<shared_ptr<Light>> lights;
+	std::vector<shared_ptr<Light>> lights;
 	Color amblight;
 	Color background;
 
