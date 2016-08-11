@@ -6,7 +6,7 @@
 #include <map>
 #include <glm/vec3.hpp>
 #include "material.hpp"
-#include "scene.hpp"
+//#include "scene.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
 #include "shape.hpp"
