@@ -2,5 +2,9 @@ define material red 1 0 0 1 0 0 1 0 0 1
 
 define material blue 0 0 1 0 0 1 0 0 1 1
 # define material sphere box
+<<<<<<< HEAD
 define material black 0 0 0 0 0 0 0 0 0 1
 define shape sphere kugel 1 2 3 10 black
+=======
+
+>>>>>>> f736c6e3f7bb676e4dbc00086afa434226a02f8f
