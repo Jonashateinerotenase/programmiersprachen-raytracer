@@ -9,14 +9,14 @@ public:
   Sphere();
   Sphere(glm::vec3 const& middle, float r);
   Sphere(glm::vec3 const& middle, float r, std::string const& name, Material const& mat);
-  ~Sphere();
+  //~Sphere();
   float area() const override;
   float volume() const override;
   glm::vec3 const& middle() const;
   float rad() const;
   std::ostream& print(std::ostream& os) const override;
   bool intersect(Ray const& ray, float& distance) override;
-//private:
+private:
   glm::vec3 middle_;
   float r_;
 

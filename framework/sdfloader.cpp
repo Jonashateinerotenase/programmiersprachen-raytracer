@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <map>
+#include <vector>
 #include <glm/vec3.hpp>
 #include "material.hpp"
 //#include "scene.hpp"
@@ -20,7 +21,7 @@ int main () {
   std::string line;
   std::ifstream myfile ("../../../scene/scene1.txt");
   std::map<std::string, std::shared_ptr<Material>> materials;
-  std::map<std::string, std::shared_ptr<Shape>> shapes;
+  std::vector<std::shared_ptr<Shape>> shapes;
 //  Scene scene1;
   if (myfile.is_open())
   {
@@ -34,7 +35,6 @@ int main () {
   
   	  ss>>keyword;
       if(keyword == "#"){continue;}
-//if(line.find("#"){break;})
       if(keyword == "define"){
      	    ss>>keyword;
           if(keyword == "material"){
@@ -66,21 +66,20 @@ int main () {
 
             }
             if(keyword == "sphere"){
-              glm::vec3 testmid{1.0f,2.0f,3.0f};
-              float testr = 1;
-              Material testmat;
-              std::string testname ="hi";
-              Sphere sph{testmid, testr, testname, testmat};
-              //float x,y,z,r;
-              Material mat;
-              ss>>sph.name_;
-              ss>>sph.middle_.x;
-              ss>>sph.middle_.y;
-              ss>>sph.middle_.z;
-              ss>>sph.r_;
+              //Sphere sph;
+              std::string name;
+              float x,y,z,r;
+
+              ss>>name;
+              ss>>x;
+              ss>>y;
+              ss>>z;
+              glm::vec3 middle{x,y,z};
+
+              ss>>r;
               std::string mat_name;
-              ss>>mat_name;              
-              std::cout <<mat_name;
+              ss>>mat_name;             
+//            std::cout <<mat_name;
               //ss>>sph.name_;
               //ss>>sph.middle_.x;
               //ss>>sph.middle_.y;
@@ -88,22 +87,22 @@ int main () {
               //ss>>sph.r_;
 
               //sph.mat_=*materials(mat_name);
-              //std::shared_ptr<Shape> temp_ptr = std::make_shared<Shape>(sph);
-              //shapes.insert({sph.name, temp_ptr});
+              std::shared_ptr<Shape> temp_ptr = std::make_shared<Sphere>(Sphere{middle,r,name,*materials[mat_name]});
+              shapes.push_back(temp_ptr);
             // std::cout << sph;
-            }
+              }
 
-          }
+            }
           if(keyword == "light"){
 
           }
           if(keyword == "camera"){
 
           }
+        } 
       } 
-    } 
-    myfile.close();
-  }
+      myfile.close();
+    }
 
   else std::cout << "Unable to open file"; 
 

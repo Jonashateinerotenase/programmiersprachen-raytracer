@@ -19,10 +19,10 @@ Shape(name, mat),
 middle_{middle},
 r_{r}
 {}
-Sphere::~Sphere()
+/*Sphere::~Sphere()
 {
 	std::cout<<"Sphere destroyed"<<std::endl;
-}
+}*/
 
 float Sphere::area() const {
   return 4.0f * /*M_PI*/3.1415f * r_*r_;
