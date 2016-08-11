@@ -66,22 +66,27 @@ int main () {
 
             }
             if(keyword == "sphere"){
-             std::string name;
-             float x,y,z,r;
-             Material mat;
-             ss>>name;
-             ss>>x;
-             ss>>y;
-             ss>>z;
-             ss>>r;
-             std::cout << mat;
+              glm::vec3 testmid{1.0f,2.0f,3.0f};
+              float testr = 1;
+              Material testmat;
+              std::string testname ="hi";
+              Sphere sph{testmid, testr, testname, testmat};
+              //float x,y,z,r;
+              Material mat;
+              ss>>sph.name_;
+              ss>>sph.middle_.x;
+              ss>>sph.middle_.y;
+              ss>>sph.middle_.z;
+              ss>>sph.r_;
+              std::string mat_name;
+              ss>>mat_name;              
+              std::cout <<mat_name;
               //ss>>sph.name_;
               //ss>>sph.middle_.x;
               //ss>>sph.middle_.y;
               //ss>>sph.middle_.z;
               //ss>>sph.r_;
-              //std::string mat_name;
-              //ss>>mat_name;
+
               //sph.mat_=*materials(mat_name);
               //std::shared_ptr<Shape> temp_ptr = std::make_shared<Shape>(sph);
               //shapes.insert({sph.name, temp_ptr});
