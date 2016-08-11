@@ -34,16 +34,19 @@ int main () {
 	ss>>mat.name;
 	ss>>mat.ka.r;
 	ss>>mat.ka.g;
-        ss>>mat.ka.b;
-	ss>>mat.ks.r;
+  ss>>mat.ka.b;
+
+  ss>>mat.ks.r;
 	ss>>mat.ks.g;
-        ss>>mat.ks.b;
-	ss>>mat.kd.r;
+  ss>>mat.ks.b;
+	
+  ss>>mat.kd.r;
 	ss>>mat.kd.g;
-        ss>>mat.kd.b;
-	ss>>mat.m;
-	std::shared_ptr<Material> temp_ptr = std::make_shared<Material>(Material{name, ka, kd, ks, m});
-  materials.insert({name, temp_ptr});
+  ss>>mat.kd.b;
+	
+  ss>>mat.m;
+	std::shared_ptr<Material> temp_ptr = std::make_shared<Material>(mat);
+  materials.insert({mat.name, temp_ptr});
   //materials[mat.name]= mat;
 	std::cout << mat;
     }
