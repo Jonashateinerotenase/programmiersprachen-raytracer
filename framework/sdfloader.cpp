@@ -5,11 +5,11 @@
 #include <string>
 #include <map>
 #include <glm/vec3.hpp>
-#include <class T>
 #include "material.hpp"
 #include "scene.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
+#include <memory>
 //#include "sdfloader.hpp"
 //#include "camera.hpp"
 #include "color.hpp"
