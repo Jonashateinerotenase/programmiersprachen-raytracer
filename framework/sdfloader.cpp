@@ -66,7 +66,15 @@ int main () {
 
             }
             if(keyword == "sphere"){
-            Sphere sph;
+             std::string name;
+             float x,y,z,r;
+             Material mat;
+             ss>>name;
+             ss>>x;
+             ss>>y;
+             ss>>z;
+             ss>>r;
+             std::cout << mat;
               //ss>>sph.name_;
               //ss>>sph.middle_.x;
               //ss>>sph.middle_.y;
