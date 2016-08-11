@@ -31,7 +31,7 @@ int main () {
   	  std::string keyword;
   
   	  ss>>keyword;
-      if(keyword == "#"){break;}
+      if(keyword == "#"){continue;}
 //if(line.find("#"){break;})
       if(keyword == "define"){
      	    ss>>keyword;
