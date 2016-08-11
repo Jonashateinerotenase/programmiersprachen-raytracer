@@ -84,36 +84,36 @@ TEST_CASE("boxintersect", "[box]")
   REQUIRE(b.intersect(triffter3, x));
   REQUIRE(!b.intersect(triffter4, x));
 }
-/*
+
 TEST_CASE("printsphere", "[sphere]")
 {
   Sphere s{};
-  glm::vec3 fgt{1.0f,1.0f,1.0f};
-  float g= 2.0f;
-  std::string hs = "Fabienne";
-  Color farbi{1.0f,1.0f,1.0f};
-  Sphere z{fgt,g,hs,farbi};
+  glm::vec3 mid{1.0f,1.0f,1.0f};
+  float r= 2.0f;
+  std::string name = "Fabienne";
+  Material mat;
+  Sphere z{mid,r,name,mat};
   std::stringstream ss;
   // schreibe ausgabe in den stringstream ss
   s.print(ss);
   
   s.print(std::cout);
   // schreibe ausgabe in den stringstream ss
-  z.print(ss);
+  /*z.print(ss);
   
-  z.print(std::cout);
+  z.print(std::cout);*/
 
 
-  glm::vec3 fgt2{1.0f,1.0f,1.0f};
+  /*glm::vec3 fgt2{1.0f,1.0f,1.0f};
   glm::vec3 fgt3{1.0f,1.0f,1.0f};
   std::string hs2 = "Herodes";
   Color farbi2{0.198f,0.146f,0.082f};
   Box h{fgt2,fgt3,hs2,farbi2};
   h.print(ss);
-  h.print(std::cout);
+  h.print(std::cout);*/
 
 }
-*/
+
 //Sphere(glm::vec3 const& middle, float r, std::string const& name, Color const& farbe);
 
 int main(int argc, char *argv[])
