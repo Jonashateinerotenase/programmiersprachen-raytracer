@@ -23,33 +23,56 @@ int main () {
   if (myfile.is_open())
   {
     while ( getline (myfile,line) )
-    {
-      std::cout << line << '\n';
+     {
+      //std::cout << line << '\n';
       std::stringstream ss;
-	ss << line;
-	Material mat;
-	std::string keyword;
-	ss>>keyword;
-	ss>>keyword;
-	ss>>mat.name;
-	ss>>mat.ka.r;
-	ss>>mat.ka.g;
-  ss>>mat.ka.b;
+  	  ss << line;
+  	  Material mat;
+  	  std::string keyword;
+  
+  	  ss>>keyword;
+      if(keyword == "#"){break;}
+//if(line.find("#"){break;})
+      if(keyword == "define"){
+     	    ss>>keyword;
+          if(keyword == "material"){
+            ss>>mat.name;
+     	      ss>>mat.ka.r;
+     	      ss>>mat.ka.g;
+            ss>>mat.ka.b;
+        
+            ss>>mat.ks.r;
+        	  ss>>mat.ks.g;
+            ss>>mat.ks.b;
+        	   
+            ss>>mat.kd.r;
+        	  ss>>mat.kd.g;
+            ss>>mat.kd.b;
+       	    ss>>mat.m;
+  
+            std::shared_ptr<Material> temp_ptr = std::make_shared<Material>(mat);
+            materials.insert({mat.name, temp_ptr});
+            //materials[mat.name]= mat;
+            std::cout << mat;
+          }
+          if(keyword == "shape"){
+            ss>>keyword;
+            if(keyword == "box"){
 
-  ss>>mat.ks.r;
-	ss>>mat.ks.g;
-  ss>>mat.ks.b;
-	
-  ss>>mat.kd.r;
-	ss>>mat.kd.g;
-  ss>>mat.kd.b;
-	
-  ss>>mat.m;
-	std::shared_ptr<Material> temp_ptr = std::make_shared<Material>(mat);
-  materials.insert({mat.name, temp_ptr});
-  //materials[mat.name]= mat;
-	std::cout << mat;
-    }
+            }
+            if(keyword == "sphere"){
+
+            }
+
+          }
+          if(keyword == "light"){
+
+          }
+          if(keyword == "camera"){
+
+          }
+      } 
+    } 
     myfile.close();
   }
 
