@@ -4,7 +4,7 @@
 #include <map>
 #include <vector>
 #include "shape.hpp"
-#include "material.hpp"
+//#include "material.hpp"
 //#include "camera.hpp"
 //#include "light.hpp"
 
@@ -14,7 +14,7 @@ struct Scene{
 	filename{"defaultscene.ppm"},
 //	camera{},
 	amblight{},
-	background{},
+	background{}
 //	materials{},
 //	lights{},
 //	shapes{}
@@ -28,12 +28,12 @@ struct Scene{
 //	std::map<std::string, std::shared_ptr<Material>> materials_map,
 //	std::vector<std::shared_ptr<Light>> lights_vec,
 //	std::vector<std::shared_ptr<Shape>> shapes):
-    :
+    ):
 
 	filename{fname},
 	//camera{cam},
 	amblight{al},
-	background{bg},
+	background{bg}
 	//materials{},
 	//lights{},
 	//shapes_ptr{shapes}
@@ -41,6 +41,7 @@ struct Scene{
 	//	materials.swap(materials_map);
     //    lights.swap(lights_vec)
     }
+
 
 	std::string filename;
 //	std::Camera camera;
