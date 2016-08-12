@@ -4,6 +4,7 @@
 #include <glm/vec3.hpp>
 #include "shape.hpp"
 
+
 class Sphere : public Shape
 {
 public:
@@ -14,7 +15,7 @@ public:
   glm::vec3 const& middle() const;
   float rad() const;
   std::ostream& print(std::ostream& os) const override;
-  bool intersect(Ray const& ray, float& distance) const override;
+  Hit intersect(Ray const& ray) override;
 
 private:
   glm::vec3 middle_;

@@ -4,6 +4,7 @@
 #include "shape.hpp"
 #include <glm/vec3.hpp>
 
+
 class Box : public Shape
 {
 public:
@@ -12,7 +13,7 @@ public:
   Box(glm::vec3 const& min, glm::vec3 const& max, std::string const& name,
   	Material const& mat);
   
-  bool intersect(Ray const& ray, float& t) const override;
+  Hit intersect(Ray const& ray) override;
   glm::vec3 const& min() const;
   glm::vec3 const& max() const;
   std::ostream& print(std::ostream& os) const override;

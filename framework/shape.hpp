@@ -5,15 +5,18 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 
+#include "hit.hpp"
 #include "ray.hpp"
 #include "color.hpp"
 #include "material.hpp"
+
+
 
 class Shape{
 public:
   virtual ~Shape() {}
 
-  virtual bool intersect(Ray const& ray, float& t) const = 0;
+  virtual Hit intersect(Ray const& ray) = 0;
   std::string const& getname() const;
   Material const& getmaterial() const;
   virtual std::ostream& print(std::ostream& os) const;

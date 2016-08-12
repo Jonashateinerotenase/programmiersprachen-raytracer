@@ -39,6 +39,23 @@ std::ostream& Sphere::print(std::ostream& os) const{
 	<< ")\n";
 }
 
-bool Sphere::intersect(Ray const& ray, float& distance) const {
+/*bool Sphere::intersect(Ray const& ray, float& distance) const {
   return glm::intersectRaySphere(ray.origin, ray.direction, middle_, r_*r_, distance);
+}*/
+
+/* virtual */ Hit Sphere::intersect(Ray const& ray) {
+    Hit s_hit;
+
+    s_hit.hit_ = glm::intersectRaySphere(
+        ray.origin,
+        glm::normalize(ray.direction),
+        middle_, r_,
+        s_hit.target_, s_hit.normal_
+    );
+
+    s_hit.distance_ = glm::distance(ray.origin, s_hit.target_);
+
+    s_hit.sptr_ = std::make_shared<Sphere>(*this);
+
+    return s_hit;
 }

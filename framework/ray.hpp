@@ -8,10 +8,17 @@
 #include <string>
 struct Ray
 {
-	Ray();
+	Ray():
+	origin{0.0,0.0,0.0},
+	direction{0.0,0.0,0.0},
+	inv_direction{-0.0,-0.0,-0.0}
+	{}
+
+
 	Ray(glm::vec3 const& ori, glm::vec3 const& dir):
 	origin{ori},
-	direction{dir}
+	direction{dir},
+	inv_direction{1.0/dir.x,1.0/dir.y,1.0/dir.z}
 	{}
 
 
@@ -29,6 +36,7 @@ struct Ray
 
 	glm::vec3 origin;
 	glm::vec3 direction;
+	glm::vec3 inv_direction;
 
 };
 
