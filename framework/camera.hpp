@@ -3,7 +3,7 @@
 #include <string>
 #include <glm/vec3.hpp>
 #include <iostream>
-//#include "ray.hpp"
+#include "ray.hpp"
 
 class Camera
 {

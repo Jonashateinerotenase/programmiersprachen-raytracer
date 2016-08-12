@@ -157,10 +157,10 @@ void load_scene() {
 
               std::shared_ptr<Camera> cam_ptr = std::make_shared<Camera>
               (
-                Camera{name,pos,angle};
+                Camera{name,pos,angle}
               );
                 std::cout << *cam_ptr;              
-                s
+                
               Camera cam{name,pos,angle};              
               
           }
