@@ -162,6 +162,10 @@ void load_scene() {
               Camera cam{name,pos,angle};              
               
           }
+          if(keyword == "renderer"){
+                  
+              
+          }
         } 
       } 
       myfile.close();
