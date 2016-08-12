@@ -6,8 +6,8 @@ Shape::Shape():
 {}
 
 Shape::Shape(std::string const& name, Material const& mati):
-  name_{name},
-  mat_{mati}
+  	name_{name},
+  	mat_{mati}
 {}
 
 std::string const& Shape::getname() const{

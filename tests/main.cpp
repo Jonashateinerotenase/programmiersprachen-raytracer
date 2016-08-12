@@ -1,13 +1,14 @@
 #define CATCH_CONFIG_RUNNER
-#include <catch.hpp>
-#include "box.hpp"
-#include "shape.hpp"
-#include "sphere.hpp"
-#include <glm/vec3.hpp>
 #include <iostream>
 #include <sstream>
+
 #include <glm/glm.hpp>
+#include <glm/vec3.hpp>
 #include <glm/gtx/intersect.hpp>
+#include <catch.hpp>
+
+#include "box.hpp"
+#include "sphere.hpp"
 
 
 TEST_CASE("box default test", "[box]")
@@ -29,23 +30,7 @@ TEST_CASE("box default test", "[box]")
   REQUIRE(kugel.middle().z == testmin2.z);
   REQUIRE(1==1);
 }
-/**/
-TEST_CASE("area der box", "[box]")
-{
-  
-  glm::vec3 testmin{0.0f,0.0f,0.0f};
-  glm::vec3 testmax{1.0f,1.0f,1.0f};
-  Box kiste{testmin,testmax};
-  //std::cout << kiste.min().x << std::endl;
-  REQUIRE(kiste.area() == 6);
-  REQUIRE(kiste.volume() == 1);
 
- glm::vec3 testmink{0.0f,0.0f,0.0f};
- float rad = 1.0f;
- Sphere Kuchel{testmink,rad};
-// REQUIRE(Kuchel.area()== Approx(12.56637f));
- //REQUIRE(Kuchel.volume()==Approx(4.18879f));
-}
 
 TEST_CASE("print", "[box]")
 {

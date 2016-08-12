@@ -1,23 +1,22 @@
-//reading a text file
+#include "sdfloader.hpp"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <map>
 #include <vector>
+#include <memory>
 #include <glm/vec3.hpp>
+
+#include "color.hpp"
 #include "material.hpp"
-//#include "scene.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
-#include "shape.hpp"
-#include <memory>
-//#include "sdfloader.hpp"
+//#include "scene.hpp"
 //#include "camera.hpp"
-#include "color.hpp"
-//#include "renderer.hpp"
 
-int main () {
+void load_scene() {
   std::string line;
   std::ifstream myfile ("../../../scene/scene1.txt");
   std::map<std::string, std::shared_ptr<Material>> materials;
@@ -65,7 +64,7 @@ int main () {
             if(keyword == "box"){
 
             }
-            if(keyword == "sphere"){
+            else if(keyword == "sphere"){
               //Sphere sph;
               std::string name;
               float x,y,z,r;
@@ -87,10 +86,12 @@ int main () {
               //ss>>sph.r_;
 
               //sph.mat_=*materials(mat_name);
-              std::shared_ptr<Shape> temp_ptr = std::make_shared<Sphere>(Sphere{middle,r,name,*materials[mat_name]});
-              shapes.push_back(temp_ptr);
-            // std::cout << sph;
-              }
+              std::shared_ptr<Shape> temp_ptr = std::make_shared<Sphere>(
+                //Sphere{middle,r,name,*materials[mat_name]}
+              );
+//              shapes.push_back(temp_ptr);
+              // std::cout << sph;
+            }
 
             }
           if(keyword == "light"){
@@ -105,6 +106,4 @@ int main () {
     }
 
   else std::cout << "Unable to open file"; 
-
-  return 0;
 }

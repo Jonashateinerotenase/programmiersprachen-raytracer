@@ -1,6 +1,5 @@
-#include "sphere.hpp"
 #include <cmath>
-
+#include "sphere.hpp"
 
 Sphere::Sphere():
 Shape(),
@@ -19,18 +18,8 @@ Shape(name, mat),
 middle_{middle},
 r_{r}
 {}
-/*Sphere::~Sphere()
-{
-	std::cout<<"Sphere destroyed"<<std::endl;
-}*/
 
-float Sphere::area() const {
-  return 4.0f * /*M_PI*/3.1415f * r_*r_;
-}
 
-float Sphere::volume() const {
-  return 4.0f/3.0f * /*M_PI*/3.1415f * r_*r_*r_;
-}
 
 glm::vec3 const& Sphere::middle() const
 {
@@ -50,6 +39,6 @@ std::ostream& Sphere::print(std::ostream& os) const{
 	<< ")\n";
 }
 
-bool Sphere::intersect(Ray const& ray, float& distance) {
-return glm::intersectRaySphere(ray.origin, ray.direction, middle_, r_*r_, distance);
+bool Sphere::intersect(Ray const& ray, float& distance) const {
+  return glm::intersectRaySphere(ray.origin, ray.direction, middle_, r_*r_, distance);
 }

@@ -2,9 +2,13 @@
 #include <renderer.hpp>
 #include <fensterchen.hpp>
 
+#include "sdfloader.hpp"
+
 int main(int argc, char* argv[])
 {
-  unsigned const width = 600;
+  load_scene();
+
+  /*unsigned const width = 600;
   unsigned const height = 600;
   std::string const filename = "./checkerboard.ppm";
 
@@ -25,7 +29,7 @@ int main(int argc, char* argv[])
     win.update();
   }
 
-  //thr.join();
+  //thr.join();*/
 
   return 0;
 }
