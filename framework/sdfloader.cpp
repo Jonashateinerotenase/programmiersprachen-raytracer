@@ -14,7 +14,7 @@
 #include "box.hpp"
 #include "sphere.hpp"
 #include "light.hpp"
-//#include "camera.hpp"
+#include "camera.hpp"
 //#include "scene.hpp"
 
 void load_scene() {
@@ -136,22 +136,34 @@ void load_scene() {
               (
                 Light{name, pos, ld}
               );
-                //std::cout << *temp_ptr;#
+                std::cout << *temp_ptr;
               //geht erst wenn der operator da ist!
               std::cout << "das scheiss licht geht nich junge";
                 lights.push_back(temp_ptr);
 
 
           }
-          //kommt rein wenn fertig
-         /* if(keyword == "camera"){
+          
+          if(keyword == "camera"){
               std::string name;
-              float angle;
+              float angle, posx, posy, posz;
               ss>>name;
+              ss>>posx;
+              ss>>posy;
+              ss>>posz;
+              glm::vec3 pos{posx,posy,posz};
               ss>>angle;
-              Camera{name,angle};              
+
+
+              std::shared_ptr<Camera> cam_ptr = std::make_shared<Camera>
+              (
+                Camera{name,pos,angle};
+              );
+                std::cout << *cam_ptr;              
+                s
+              Camera cam{name,pos,angle};              
               
-          }*/
+          }
         } 
       } 
       myfile.close();

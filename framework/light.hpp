@@ -9,6 +9,8 @@ class Light{
 public:
 	Light();
 	Light(std::string const& name, glm::vec3 const& pos, Color const& ld);
+	friend std::ostream& operator<<(std::ostream& os, Light const& light);
+
 //	glm::vec3 const& pos() const;
 //	Color const& ld() const;
 //	std::string const& name() const;

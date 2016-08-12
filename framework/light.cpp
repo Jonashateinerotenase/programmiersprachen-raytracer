@@ -11,3 +11,19 @@ Light::Light(std::string const& name, glm::vec3 const& pos, Color const& ld):
 	pos_{pos},
 	ld_{ld}
 	{}
+
+std::ostream& operator<<(std::ostream& os, Light const& light)
+  {
+    os << "Light: \n"
+       << "Position: (" 
+       << light.pos_.x 
+       << "," 
+       << light.pos_.y 
+       << "," 
+       << light.pos_.z 
+       << ")\n"
+       << "Farbe: "
+       << light.ld_ 
+       << "\n\n";
+    return os;
+  }

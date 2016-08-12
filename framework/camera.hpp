@@ -2,14 +2,14 @@
 #define CAMERA_HPP
 #include <string>
 #include <glm/vec3.hpp>
-#include "ray.hpp"
 #include <iostream>
+//#include "ray.hpp"
 
 class Camera
 {
 public:
 	Camera();
-	Camera(std::string const& name, glm::vec3 const& pos, float const& angle);
+	Camera(std::string const& name, glm::vec3 const& pos, float angle);
 
 	Ray const castray(glm::vec3 const& dir) const;
     friend std::ostream& operator<<(std::ostream& os, Camera const& c);
