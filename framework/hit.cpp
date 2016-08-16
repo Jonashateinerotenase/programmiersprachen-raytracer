@@ -1,5 +1,6 @@
 #include <limits>
 #include "hit.hpp"
+#include "shape.hpp"
 
 
 Hit::Hit():

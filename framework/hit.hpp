@@ -3,7 +3,7 @@
 #include <glm/vec3.hpp>
 #include <memory>
 #include "ray.hpp"
-#include "shape.hpp"
+//#include "shape.hpp"
 
 class Shape;
 

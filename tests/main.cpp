@@ -42,7 +42,7 @@ TEST_CASE("print", "[box]")
   b.print(std::cout);
 }
 
-TEST_CASE("boxintersect", "[box]")
+/*TEST_CASE("boxintersect", "[box]")
 {
   Box b{glm::vec3{-0.0f}, glm::vec3{1.0f}};
   glm::vec3 orimori{-1.0f,-1.0f,-1.0f};
@@ -68,7 +68,7 @@ TEST_CASE("boxintersect", "[box]")
   REQUIRE(b.intersect(triffter2, x));
   REQUIRE(b.intersect(triffter3, x));
   REQUIRE(!b.intersect(triffter4, x));
-}
+}*/
 
 TEST_CASE("printsphere", "[sphere]")
 {
