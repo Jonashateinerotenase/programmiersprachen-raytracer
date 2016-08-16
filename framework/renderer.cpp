@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "renderer.hpp"
+#include "scene.hpp"
 
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   : width_(w)
@@ -17,9 +18,22 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   , ppm_(width_, height_)
 {}
 
+
+float pic_ymax =2/width_*height_;
+float pic_z =1/(0.5*alpha);
+glm::vec3 p1{-1.0,};
+
+//0.5 Alpha / 2 M_PI
 void Renderer::render()
 {
-  const std::size_t checkersize = 20;
+
+  height_=(2/width_)
+
+
+
+
+
+  /*const std::size_t checkersize = 20;
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
@@ -32,7 +46,7 @@ void Renderer::render()
 
       write(p);
     }
-  }
+  }*/
   ppm_.save(filename_);
 }
 

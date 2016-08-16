@@ -8,6 +8,12 @@ int main(int argc, char* argv[])
 {
   load_scene();
 
+  unsigned w = 400;
+  unsigned h = 400;
+  std::string file ="hiereinnamenstest.ppm";
+  Renderer ersterversuch(w,h,file);
+  ersterversuch.render();
+
   /*unsigned const width = 600;
   unsigned const height = 600;
   std::string const filename = "./checkerboard.ppm";
