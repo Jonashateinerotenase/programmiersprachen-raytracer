@@ -137,8 +137,6 @@ void load_scene() {
                 Light{name, pos, ld}
               );
                 std::cout << *temp_ptr;
-              //geht erst wenn der operator da ist!
-              std::cout << "das scheiss licht geht nich junge";
                 lights.push_back(temp_ptr);
 
 
@@ -162,6 +160,10 @@ void load_scene() {
                 std::cout << *cam_ptr;              
                 
               Camera cam{name,pos,angle};              
+              
+          }
+          if(keyword == "renderer"){
+                  
               
           }
         } 
