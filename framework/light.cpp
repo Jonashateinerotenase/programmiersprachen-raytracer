@@ -14,8 +14,9 @@ Light::Light(std::string const& name, glm::vec3 const& pos, Color const& ld):
 
 std::ostream& operator<<(std::ostream& os, Light const& light)
   {
-    os << "Light: \n"
-       << "Position: (" 
+    os << "\nLight: "
+       << light.name_
+       << "\nPosition: (" 
        << light.pos_.x 
        << "," 
        << light.pos_.y 

@@ -99,7 +99,9 @@ void load_scene() {
               glm::vec3 middle{x,y,z};
               ss>>r;
               std::string mat_name;
-              ss>>mat_name;             
+              ss>>mat_name; 
+              //alternative
+                          
             /*std::cout <<mat_name;
               ss>>sph.name_;
               ss>>sph.middle_.x;
