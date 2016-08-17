@@ -23,7 +23,7 @@ Renderer::Renderer(std::shared_ptr<Scene> scene)
   , filename_(file)
   , ppm_(width_, height_)*/
   scene_{scene},
-  colorbuffer(scene->xres_*scene->yres_, Color{}),
+  colorbuffer_(scene->xres_*scene->yres_, Color{}),
   ppm_(scene->xres_, scene->yres_, scene->filename)
   {}
 
@@ -33,10 +33,10 @@ Renderer::Renderer(std::shared_ptr<Scene> scene)
 void Renderer::render()
 {
 
-  float pic_ymax =2/width_*height_;
+  float pic_ymax =2/scene_->xres_*scene_->yres_;
 //float pic_z =1/(0.5*1.0/*alpha*/);//alpha von der camera aus der scene "angle"
 //glm::vec3 p1{-1.0,};
-  height_=(2/width_);
+//  height_=(2/scene.width_);
 //prinzipieller aufbau
   /*
 while (int x = 0; x < width; ++x)
@@ -53,23 +53,26 @@ while (int x = 0; x < width; ++x)
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
+      // 
+      // p.color = raytrace(ray, depth);
+
       Pixel p(x,y);
       if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
-        p.color = Color(0.0, 1.0, float(x)/height_);
+        p.color = Color(1,1,1);
       } else {
-        p.color = Color(1.0, 0.0, float(y)/width_);
+        p.color = Color(0.0, 0.0, 0.0);
       }
 
       write(p);
     }
   }*/
-  ppm_.save(filename_);
+  ppm_.save(scene_->filename);
 }
 
 void Renderer::write(Pixel const& p)
 {
   // flip pixels, because of opengl glDrawPixels
-  size_t buf_pos = (width_*p.y + p.x);
+  size_t buf_pos = (scene_->xres_*p.y + p.x);
   if (buf_pos >= colorbuffer_.size() || (int)buf_pos < 0) {
     std::cerr << "Fatal Error Renderer::write(Pixel p) : "
       << "pixel out of ppm_ : "

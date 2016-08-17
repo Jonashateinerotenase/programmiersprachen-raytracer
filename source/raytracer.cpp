@@ -8,10 +8,10 @@ int main(int argc, char* argv[])
 {
   load_scene();
 
-  unsigned w = 400;
+  /*unsigned w = 400;
   unsigned h = 400;
   std::string file ="hiereinnamenstest.ppm";
-  Renderer ersterversuch(w,h,file);
+  Renderer ersterversuch(w,h,file);*/
   ersterversuch.render();
 
   /*unsigned const width = 600;
