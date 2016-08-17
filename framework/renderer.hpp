@@ -13,13 +13,14 @@
 #include "color.hpp"
 #include "pixel.hpp"
 #include "ppmwriter.hpp"
+#include "scene.hpp"
 #include <string>
 #include <glm/glm.hpp>
 
 class Renderer
 {
 public:
-  Renderer(int w, int h, std::string const& file);
+  Renderer(std::shared_ptr scene);
 
   void render();
   void write(Pixel const& p);
@@ -30,11 +31,13 @@ public:
   }
 
 private:
-  int width_;
-  int height_;
+  
+//  int width_;
+//  int height_;
   std::vector<Color> colorbuffer_;
-  std::string filename_;
+//  std::string filename_;
   PpmWriter ppm_;
+  std::shared_ptr scene_;
 };
 
 #endif // #ifndef BUW_RENDERER_HPP

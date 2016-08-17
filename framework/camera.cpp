@@ -6,16 +6,28 @@ pos_{0.0f,0.0f,0.0f},
 angle_{45.0}
 {}
 
-Camera::Camera(std::string const& name, glm::vec3 const& pos, float angle):
-name_{name},
-pos_{pos},
-angle_{angle}
+Camera::Camera(std::string const& n, glm::vec3 const& p, float a):
+name_{n},
+pos_{p},
+angle_{a}
 {}
+
+std::string const& Camera::name() const{
+  return name_;
+} 
+glm::vec3 const& Camera::pos() const{
+  return pos_;
+} 
+float const& Camera::angle() const{
+  return angle_;
+}
 
 Ray const Camera::castray(glm::vec3 const& dir) const {
 	Ray ray{pos_, pos_+dir};
 	return ray;
 }
+
+
 
 std::ostream& operator<<(std::ostream& os, Camera const& c)
   {
@@ -25,12 +37,3 @@ std::ostream& operator<<(std::ostream& os, Camera const& c)
        << "Winkel: "<< c.angle_ << "\n\n";
     return os;
   }
-std::string const& name(){
-	return name_;
-} 
-glm::vec3 const& pos(){
-	return pos_;
-} 
-float const& angle(){
-	return angle_;
-}

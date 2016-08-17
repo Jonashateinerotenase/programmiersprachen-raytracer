@@ -7,16 +7,25 @@
 // Renderer
 // -----------------------------------------------------------------------------
 
+#include <math.h>
 #include "renderer.hpp"
-#include "scene.hpp"
+//#include "scene.hpp"
 
-Renderer::Renderer(int w, int h, std::string const& file)
-  : width_{w}
-  , height_{h}
+/*Renderer::Renderer()
+  :
+  scene_{}
+  {}
+*/
+Renderer::Renderer(std::shared_ptr<Scene> scene)
+  : /*width_{scene->xres_}
+  , height_{scene->yres_}
   , colorbuffer_(w*h, Color(0.0, 0.0, 0.0))
   , filename_(file)
-  , ppm_(width_, height_)
-{}
+  , ppm_(width_, height_)*/
+  scene_{scene},
+  colorbuffer(scene->xres_*scene->yres_, Color{}),
+  ppm_(scene->xres_, scene->yres_, scene->filename)
+  {}
 
 
 
