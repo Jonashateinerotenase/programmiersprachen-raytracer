@@ -6,7 +6,7 @@
 
 int main(int argc, char* argv[])
 {
-  std::string scenname = argv[0];
+  std::string scenename = argv[0];
 
   Renderer renderer;
 

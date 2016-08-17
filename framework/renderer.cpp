@@ -14,9 +14,9 @@
 
 Renderer::Renderer()
   :
-  scene_{}
-  colorbuffer_(scene.xres_*scene.yres_, Color{}),
-  ppm_(scene.xres_, scene.yres_, "default.ppm")  
+  scene_{},
+  colorbuffer_(scene_.xres_*scene_.yres_, Color{}),
+  ppm_(scene_.xres_, scene_.yres_, "default.ppm")  
   {}
 
 Renderer::Renderer(Scene scene)
