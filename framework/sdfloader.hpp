@@ -8,7 +8,8 @@ Sdfloader();
 Sdfloader(std::string file);
 //~Sdfloader();
 
-Scene load_scene(std::string file) const;
+//Scene load_scene(std::string file) const;
+Scene load_scene() const;
 
 	std::string file_;
 

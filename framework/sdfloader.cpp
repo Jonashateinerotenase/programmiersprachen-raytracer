@@ -15,7 +15,7 @@
 #include "sphere.hpp"
 #include "light.hpp"
 #include "camera.hpp"
-#include "scene.hpp"
+//#include "scene.hpp"
 
 /*Sdfloader::Sdfloader()
 : file_{""}
@@ -27,10 +27,11 @@ Sdfloader::Sdfloader(std::string file)
 
 Sdfloader::~Sdfloader() {}*/
 
-Scene Sdfloader::load_scene(std::string file) const {
+//Scene Sdfloader::load_scene(std::string file) const {
+Scene Sdfloader::load_scene() const {
   Scene scene;
   std::string line;
-  std::ifstream myfile (file, std::ios::in);
+  std::ifstream myfile ("../../../scene/scene1.txt");
   std::map<std::string, std::shared_ptr<Material>> materials;
   std::vector<std::shared_ptr<Shape>> shapes;
   std::vector<Light*> lights;
@@ -208,7 +209,7 @@ Scene Sdfloader::load_scene(std::string file) const {
         }
       }
 
-
+      return scene;
       myfile.close();
     }
   
