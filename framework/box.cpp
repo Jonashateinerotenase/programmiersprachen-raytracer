@@ -117,7 +117,7 @@ Hit Box::intersect(Ray const& ray) {
         // std::cout << min_.z << std::endl;
 
         b_hit.normal_ = normal;
-        b_hit.sptr_ = std::make_shared<Box>(*this);
+        b_hit.sptr_ = this;
         b_hit.hit_ = true;
     }
 

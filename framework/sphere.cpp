@@ -55,7 +55,7 @@ std::ostream& Sphere::print(std::ostream& os) const{
 
     s_hit.distance_ = glm::distance(ray.origin, s_hit.target_);
 
-    s_hit.sptr_ = std::make_shared<Sphere>(*this);
+    s_hit.sptr_ = this;
 
     return s_hit;
 }

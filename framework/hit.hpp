@@ -9,9 +9,9 @@ class Shape;
 
 struct Hit {
     Hit();
-    Hit(bool hit, float dis, glm::vec3 const& target, glm::vec3 const& norm, std::shared_ptr<Shape> sptr);
+    Hit(bool hit, float dis, glm::vec3 const& target, glm::vec3 const& norm, Shape* sptr);
 
-    Hit& operator=(Hit const& hit);
+    //Hit& operator=(Hit const& hit);
     bool operator==(Hit const& hit2) const;
 
     friend std::ostream& operator<<(std::ostream& os, Hit const& hit);
@@ -20,6 +20,6 @@ struct Hit {
     float distance_;
     glm::vec3 target_;
     glm::vec3 normal_; //Normalenvektor am Schnittpunkt
-    std::shared_ptr<Shape> sptr_;
+    Shape* sptr_;
 };
 #endif

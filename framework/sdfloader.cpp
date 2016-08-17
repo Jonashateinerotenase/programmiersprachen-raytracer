@@ -17,9 +17,20 @@
 #include "camera.hpp"
 #include "scene.hpp"
 
-void load_scene() {
+Sdfloader::Sdfloader()
+: file_{""}
+{}
+
+Sdfloader::Sdfloader(std::string file)
+: file_{file}
+{}
+
+Sdfloader::~Sdfloader() {}
+
+Scene Sdfloader::load_scene(std::string file) const {
+  Scene scene;
   std::string line;
-  std::ifstream myfile ("../../../scene/scene1.txt");
+  std::ifstream myfile (file, std::ios::in);
   std::map<std::string, std::shared_ptr<Material>> materials;
   std::vector<std::shared_ptr<Shape>> shapes;
   std::vector<std::shared_ptr<Light>> lights;
@@ -204,6 +215,7 @@ void load_scene() {
 
       myfile.close();
     }
+  
   }
 
   else std::cout << "Unable to open file"; 
