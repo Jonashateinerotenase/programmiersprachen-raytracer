@@ -6,13 +6,16 @@
 
 int main(int argc, char* argv[])
 {
-  load_scene();
+  std::string scenname = argv[0];
+
+  Sdfloader 
+  load_scene(scenname);
 
   /*unsigned w = 400;
   unsigned h = 400;
   std::string file ="hiereinnamenstest.ppm";
   Renderer ersterversuch(w,h,file);*/
-  ersterversuch.render();
+//  ersterversuch.render();
 
   /*unsigned const width = 600;
   unsigned const height = 600;

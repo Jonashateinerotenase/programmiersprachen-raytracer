@@ -17,7 +17,7 @@
 #include "camera.hpp"
 #include "scene.hpp"
 
-Sdfloader::Sdfloader()
+/*Sdfloader::Sdfloader()
 : file_{""}
 {}
 
@@ -25,7 +25,7 @@ Sdfloader::Sdfloader(std::string file)
 : file_{file}
 {}
 
-Sdfloader::~Sdfloader() {}
+Sdfloader::~Sdfloader() {}*/
 
 Scene Sdfloader::load_scene(std::string file) const {
   Scene scene;
@@ -33,7 +33,7 @@ Scene Sdfloader::load_scene(std::string file) const {
   std::ifstream myfile (file, std::ios::in);
   std::map<std::string, std::shared_ptr<Material>> materials;
   std::vector<std::shared_ptr<Shape>> shapes;
-  std::vector<std::shared_ptr<Light>> lights;
+  std::vector<Light*> lights;
   int xres,yres;
   Color amblight, background;
   std::string filename;
@@ -149,12 +149,8 @@ Scene Sdfloader::load_scene(std::string file) const {
               ss>>ldb;
               Color ld{ldr,ldg,ldb};
               
-              std::shared_ptr<Light> temp_ptr = std::make_shared<Light>
-              (
-                Light{name, pos, ld}
-              );
-                std::cout << *temp_ptr;
-                lights.push_back(temp_ptr);
+              
+                lights.push_back(new Light(name, pos, ld));
 
 
           }

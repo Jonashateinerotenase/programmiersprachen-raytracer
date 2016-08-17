@@ -3,13 +3,13 @@
 #include "scene.hpp"
 
 class Sdfloader{
+public:
 Sdfloader();
 Sdfloader(std::string file);
-~Sdfloader();
+//~Sdfloader();
 
 Scene load_scene(std::string file) const;
 
-private:
 	std::string file_;
 
 };
