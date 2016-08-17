@@ -9,6 +9,7 @@
 
 #include <math.h>
 #include "renderer.hpp"
+
 //#include "scene.hpp"
 
 /*Renderer::Renderer()
@@ -49,23 +50,33 @@ while (int x = 0; x < width; ++x)
 
 
 
-  /*const std::size_t checkersize = 20;
+  const std::size_t checkersize = 20;
 
+    float distance=(((45/360)*2*3.1415)*0.5)/2*3.1415;
+    glm::vec3 mittelp{0.0,0.0,3.0*distance};
+    float rad = 1;
+    Sphere kugel{mittelp, rad};
+    glm::vec3 onedirection{0.0,0.0,0.0};
+    int height_=400;
+    int width_=400;
+
+    
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
       // 
       // p.color = raytrace(ray, depth);
-
+      glm::vec3 origin{x,y,0.0};
+      Ray camray{origin, onedirection};
       Pixel p(x,y);
-      if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
-        p.color = Color(1,1,1);
-      } else {
-        p.color = Color(0.0, 0.0, 0.0);
-      }
-
+      Hit hitteter=kugel.intersect(camray);
+      if (hitteter.hit_ == true){
+        p.color = Color(1.0,1.0,1.0);
+      } else{
+        p.color = Color(0.0,0.0,0.0);
+      }   
       write(p);
     }
-  }*/
+  }
   ppm_.save(scene_->filename);
 }
 

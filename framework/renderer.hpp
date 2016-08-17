@@ -16,7 +16,7 @@
 #include "scene.hpp"
 #include <string>
 #include <glm/glm.hpp>
-
+#include "sphere.hpp"
 class Renderer
 {
 public:
