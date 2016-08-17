@@ -8,8 +8,8 @@ int main(int argc, char* argv[])
 {
   std::string scenname = argv[0];
 
-  Sdfloader 
-  load_scene(scenname);
+  /*Sdfloader 
+  load_scene(scenname);*/
 
   /*unsigned w = 400;
   unsigned h = 400;
