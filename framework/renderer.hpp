@@ -19,7 +19,7 @@
 class Renderer
 {
 public:
-  Renderer(unsigned w, unsigned h, std::string const& file);
+  Renderer(int w, int h, std::string const& file);
 
   void render();
   void write(Pixel const& p);
@@ -30,8 +30,8 @@ public:
   }
 
 private:
-  unsigned width_;
-  unsigned height_;
+  int width_;
+  int height_;
   std::vector<Color> colorbuffer_;
   std::string filename_;
   PpmWriter ppm_;

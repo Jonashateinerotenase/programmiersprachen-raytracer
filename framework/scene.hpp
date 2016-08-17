@@ -18,7 +18,7 @@ struct Scene{
 	background{},
 	materials{},
 	lights{},
-	shapes{}
+	shapes_ptr{}
 	{}
 
 	Scene(
@@ -49,7 +49,7 @@ struct Scene{
 //	std::vector<Shape> shapes_ptr;
 	std::vector<std::shared_ptr<Shape>> shapes_ptr;
 //	std::std::vector<Light> lights;
-	std::vector<shared_ptr<Light>> lights;
+	std::vector<std::shared_ptr<Light>> lights;
 	Color amblight;
 	Color background;
 

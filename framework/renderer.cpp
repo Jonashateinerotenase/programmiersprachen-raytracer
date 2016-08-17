@@ -10,23 +10,24 @@
 #include "renderer.hpp"
 #include "scene.hpp"
 
-Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
-  : width_(w)
-  , height_(h)
+Renderer::Renderer(int w, int h, std::string const& file)
+  : width_{w}
+  , height_{h}
   , colorbuffer_(w*h, Color(0.0, 0.0, 0.0))
   , filename_(file)
   , ppm_(width_, height_)
 {}
 
-float pic_ymax =2/width_*height_;
-float pic_z =1/(0.5*1.0/*alpha*/);//alpha von der camera aus der scene "angle"
-glm::vec3 p1{-1.0,};
+
 
 //0.5 Alpha / 2 M_PI
 void Renderer::render()
 {
 
-  height_=(2/width_)
+  float pic_ymax =2/width_*height_;
+//float pic_z =1/(0.5*1.0/*alpha*/);//alpha von der camera aus der scene "angle"
+//glm::vec3 p1{-1.0,};
+  height_=(2/width_);
 //prinzipieller aufbau
   /*
 while (int x = 0; x < width; ++x)
