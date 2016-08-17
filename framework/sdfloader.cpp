@@ -15,7 +15,7 @@
 #include "sphere.hpp"
 #include "light.hpp"
 #include "camera.hpp"
-//#include "scene.hpp"
+#include "scene.hpp"
 
 void load_scene() {
   std::string line;
@@ -173,6 +173,7 @@ void load_scene() {
               
           }
           if(keyword == "amblight"){
+              float ambr,ambg,ambb;
               ss>>ambr;
               ss>>ambg;
               ss>>ambb;
@@ -180,6 +181,7 @@ void load_scene() {
               amblight=amb;
         }
         if(keyword == "background"){
+              float backr, backg, backb;
               ss>>backr;
               ss>>backg;
               ss>>backb;
