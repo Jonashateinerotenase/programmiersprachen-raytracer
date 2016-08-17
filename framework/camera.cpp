@@ -25,3 +25,12 @@ std::ostream& operator<<(std::ostream& os, Camera const& c)
        << "Winkel: "<< c.angle_ << "\n\n";
     return os;
   }
+std::string const& name(){
+	return name_;
+} 
+glm::vec3 const& pos(){
+	return pos_;
+} 
+float const& angle(){
+	return angle_;
+}

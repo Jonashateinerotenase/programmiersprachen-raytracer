@@ -23,6 +23,10 @@ void load_scene() {
   std::map<std::string, std::shared_ptr<Material>> materials;
   std::vector<std::shared_ptr<Shape>> shapes;
   std::vector<std::shared_ptr<Light>> lights;
+  int xres,yres;
+  Color amblight, background;
+  std::string filename;
+  Camera cam;
 //  Scene scene1;
   if (myfile.is_open())
   {
@@ -155,21 +159,46 @@ void load_scene() {
               ss>>angle;
 
 
-              std::shared_ptr<Camera> cam_ptr = std::make_shared<Camera>
+              /*std::shared_ptr<Camera> cam_ptr = std::make_shared<Camera>
               (
                 Camera{name,pos,angle}
-              );
-                std::cout << *cam_ptr;              
-                
-              Camera cam{name,pos,angle};              
+              );*/
+              Camera camera;            
+              //cam.name_=name;
+              //cam.pos_=pos;
+              //cam.angle_=angle; 
+              //Camera cam{name,pos,angle};
+              std::cout << cam;
+              cam=camera;            
               
           }
-          if(keyword == "renderer"){
-                  
-              
-          }
-        } 
-      } 
+          if(keyword == "amblight"){
+              ss>>ambr;
+              ss>>ambg;
+              ss>>ambb;
+              Color amb{ambr,ambg,ambb};
+              amblight=amb;
+        }
+        if(keyword == "background"){
+              ss>>backr;
+              ss>>backg;
+              ss>>backb;
+              Color back{backr,backg,backb};
+              background=back;
+        }
+        if(keyword == "renderer"){
+          ss>>keyword;
+          ss>>filename;
+          ss>>xres;
+          ss>>yres; 
+          std::shared_ptr<Scene> scene_ptr = std::make_shared<Scene>
+            (
+              Scene{filename, xres, yres, cam, amblight, background, materials, shapes, lights}
+            );
+        }
+      }
+
+
       myfile.close();
     }
 
