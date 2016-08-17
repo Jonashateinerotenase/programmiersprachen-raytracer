@@ -8,6 +8,12 @@ int main(int argc, char* argv[])
 {
   std::string scenname = argv[0];
 
+  Renderer renderer;
+
+  load_scene(scenename);
+
+  renderer.render(load_scene(scenename));
+
   /*Sdfloader 
   load_scene(scenname);*/
 

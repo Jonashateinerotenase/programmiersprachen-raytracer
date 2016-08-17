@@ -12,7 +12,8 @@
 struct Scene{
 
 	std::string filename;
-	int yres_, xres_;
+	float yres_ = 0.0;
+	float xres_ = 0.0;
 	Camera camera;
 	std::map<std::string, std::shared_ptr<Material>> materials;	
 //	std::vector<Shape> shapes_ptr;
