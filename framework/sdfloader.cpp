@@ -17,15 +17,10 @@
 #include "camera.hpp"
 //#include "scene.hpp"
 
-/*Sdfloader::Sdfloader()
-: file_{""}
-{}
-
-Sdfloader::Sdfloader(std::string file)
+Sdfloader::Sdfloader(std::string const& file)
 : file_{file}
 {}
 
-Sdfloader::~Sdfloader() {}*/
 
 //Scene Sdfloader::load_scene(std::string file) const {
 Scene Sdfloader::load_scene() const {

@@ -6,13 +6,15 @@
 
 int main(int argc, char* argv[])
 {
-/*  std::string scenename = argv[0];
+  std::string scenename = argv[0];
 
-  load_scene(scenename);
+  Sdfloader loader{ scenename };
+
+  Scene scene = loader.load_scene();
 
 
-render(load_scene(scenename));*/
-load_scene();
+  
+//load_scene();
 //Scene scene = load_scene();
 //render(scene);
 
