@@ -15,10 +15,8 @@ struct Scene{
 	float yres_ = 0.0;
 	float xres_ = 0.0;
 	Camera camera;
-	std::map<std::string, std::shared_ptr<Material>> materials;	
-//	std::vector<Shape> shapes_ptr;
+	std::map<std::string,Material> materials;	
 	std::vector<std::shared_ptr<Shape>> shapes_ptr;
-//	std::std::vector<Light> lights;
 	std::vector<Light> lights;
 	Color amblight;
 	Color background;

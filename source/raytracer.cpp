@@ -2,15 +2,26 @@
 #include <renderer.hpp>
 #include <fensterchen.hpp>
 
-#include "sdfloader.hpp"
+//#include "scene.hpp"
+#include "sdfloader.cpp"
 
 int main(int argc, char* argv[])
 {
-  std::string scenename = argv[0];
+//  std::string scenename = argv[1];
 
-  Sdfloader loader{ scenename };
+  if (argc !=2){
+    std::cout << "Usage:raytracer filename.sdf \n";
+//    std::cout << argv[0] << "\n";
+    return 1;
 
-  Scene scene = loader.load_scene();
+
+
+
+  };
+
+  Scene scene = load_sdf_file(argv[1]);
+
+
 
 
   

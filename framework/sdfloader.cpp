@@ -1,4 +1,5 @@
-#include "sdfloader.hpp"
+#ifndef SDFLOADER_HPP
+#define SDFLOADER_HPP
 
 #include <iostream>
 #include <fstream>
@@ -15,26 +16,23 @@
 #include "sphere.hpp"
 #include "light.hpp"
 #include "camera.hpp"
-//#include "scene.hpp"
-
-Sdfloader::Sdfloader(std::string const& file)
-: file_{file}
-{}
-
+#include "scene.hpp"
 
 //Scene Sdfloader::load_scene(std::string file) const {
-Scene Sdfloader::load_scene() const {
+Scene load_sdf_file(std::string const& filename) {
   Scene scene;
   std::string line;
-  std::ifstream myfile ("../../../scene/scene1.txt");
-  std::map<std::string, std::shared_ptr<Material>> materials;
+  std::ifstream myfile (filename);
+  std::cout << filename << "\n";
+  /*std::map<std::string, std::shared_ptr<Material>> materials;
   std::vector<std::shared_ptr<Shape>> shapes;
   std::vector<Light*> lights;
   int xres,yres;
   Color amblight, background;
   std::string filename;
-  Camera cam;
+  Camera cam;*/
 //  Scene scene1;
+
   if (myfile.is_open())
   {
     while ( getline (myfile,line) )
@@ -65,8 +63,8 @@ Scene Sdfloader::load_scene() const {
             ss>>mat.kd.b;
        	    ss>>mat.m;
   
-            std::shared_ptr<Material> temp_ptr = std::make_shared<Material>(mat);
-            materials.insert({mat.name, temp_ptr});
+            
+            scene.materials.insert({mat.name, mat});
             //materials[mat.name]= mat;
             std::cout << mat;
           }
@@ -94,10 +92,10 @@ Scene Sdfloader::load_scene() const {
                 
                 std::shared_ptr<Shape> temp_ptr = std::make_shared<Box>
                 (
-                  Box{min,max,name,*materials[mat_namebox]}
+                  Box{min,max,name,scene.materials[mat_namebox]}
                 );
                   std::cout << *temp_ptr;
-                  shapes.push_back(temp_ptr);
+                  scene.shapes_ptr.push_back(temp_ptr);
   
               }
               if(keyword == "sphere"){
@@ -123,10 +121,10 @@ Scene Sdfloader::load_scene() const {
                 std::cout << sph;sph.mat_=*materials(mat_name);*/
                 std::shared_ptr<Shape> temp_ptr = std::make_shared<Sphere>
                 (
-                  Sphere{middle,r,name,*materials[mat_name]}
+                  Sphere{middle,r,name,scene.materials[mat_name]}
                 );
                   std::cout << *temp_ptr;              
-                  shapes.push_back(temp_ptr);
+                  scene.shapes_ptr.push_back(temp_ptr);
                 // std::cout << sph;
               }
 
@@ -146,7 +144,7 @@ Scene Sdfloader::load_scene() const {
               Color ld{ldr,ldg,ldb};
               
               
-                lights.push_back(new Light(name, pos, ld));
+                scene.lights.push_back( Light(name, pos, ld));
 
 
           }
@@ -166,13 +164,13 @@ Scene Sdfloader::load_scene() const {
               (
                 Camera{name,pos,angle}
               );*/
-              Camera camera;            
+//            Camera cam;            
               //cam.name_=name;
               //cam.pos_=pos;
               //cam.angle_=angle; 
-              //Camera cam{name,pos,angle};
+              Camera cam{name,pos,angle};
               std::cout << cam;
-              cam=camera;            
+              scene.camera=cam;            
               
           }
           if(keyword == "amblight"){
@@ -181,7 +179,7 @@ Scene Sdfloader::load_scene() const {
               ss>>ambg;
               ss>>ambb;
               Color amb{ambr,ambg,ambb};
-              amblight=amb;
+              scene.amblight=amb;
         }
         if(keyword == "background"){
               float backr, backg, backb;
@@ -189,12 +187,14 @@ Scene Sdfloader::load_scene() const {
               ss>>backg;
               ss>>backb;
               Color back{backr,backg,backb};
-              background=back;
+              scene.background=back;
         }
 
         if(keyword == "renderer"){
           ss>>keyword;
-          ss>>filename;
+          std::string pic_name;
+          ss>>pic_name;
+          float xres, yres;
           ss>>xres;
           ss>>yres; 
           /*std::shared_ptr<Scene> scene_ptr = std::make_shared<Scene>
@@ -212,3 +212,4 @@ Scene Sdfloader::load_scene() const {
 
   else std::cout << "Unable to open file"; 
 }
+#endif
