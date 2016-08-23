@@ -17,7 +17,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include "sphere.hpp"
-#include "sdfloader.cpp"
+//#include "sdfloader.cpp"
 class Renderer
 {
 public:

@@ -21,15 +21,18 @@ int main(int argc, char* argv[])
 
   Scene scene = load_sdf_file(argv[1]);
 
+  Renderer r1{scene};
+
+//  std::cout << scene.filename << " " << scene.yres_ << " " << scene.xres_ << " " << scene.amblight << " \n";
+
+  r1.render();
 
 
-
-  
 //load_scene();
 //Scene scene = load_scene();
 //render(scene);
 
-  /*Sdfloader 
+  /*Sdfloader
   load_scene(scenname);*/
 
   /*unsigned w = 400;

@@ -20,196 +20,195 @@
 
 //Scene Sdfloader::load_scene(std::string file) const {
 Scene load_sdf_file(std::string const& filename) {
-  Scene scene;
-  std::string line;
-  std::ifstream myfile (filename);
-  std::cout << filename << "\n";
-  /*std::map<std::string, std::shared_ptr<Material>> materials;
-  std::vector<std::shared_ptr<Shape>> shapes;
-  std::vector<Light*> lights;
-  int xres,yres;
-  Color amblight, background;
-  std::string filename;
-  Camera cam;*/
-//  Scene scene1;
+    Scene scene;
+    std::string line;
+    std::ifstream myfile (filename);
+    //  std::cout << filename << "\n";
+    /*std::map<std::string, std::shared_ptr<Material>> materials;
+    std::vector<std::shared_ptr<Shape>> shapes;
+    std::vector<Light*> lights;
+    int xres,yres;
+    Color amblight, background;
+    std::string filename;
+    Camera cam;*/
+    //  Scene scene1;
 
-  if (myfile.is_open())
-  {
-    while ( getline (myfile,line) )
-     {
-      //std::cout << line << '\n';
-      std::stringstream ss;
-  	  ss << line;
-  	 
-  	  std::string keyword;
-  
-  	  ss>>keyword;
-      if(keyword == "#"){continue;}
-      if(keyword == "define"){
-     	    ss>>keyword;
-          if(keyword == "material"){
-            Material mat;
-            ss>>mat.name;
-     	      ss>>mat.ka.r;
-     	      ss>>mat.ka.g;
-            ss>>mat.ka.b;
-        
-            ss>>mat.ks.r;
-        	  ss>>mat.ks.g;
-            ss>>mat.ks.b;
-        	   
-            ss>>mat.kd.r;
-        	  ss>>mat.kd.g;
-            ss>>mat.kd.b;
-       	    ss>>mat.m;
-  
-            
-            scene.materials.insert({mat.name, mat});
-            //materials[mat.name]= mat;
-            std::cout << mat;
-          }
-          if(keyword == "shape"){
+    if (myfile.is_open())
+    {
+        while ( getline(myfile,line) )
+        {
+            //std::cout << line << '\n';
+            std::stringstream ss;
+            ss << line;
+            std::string keyword;
+
             ss>>keyword;
-
-
-              if(keyword == "box"){
-                std::string name;
-                std::string mat_namebox;
-                float minx,miny,minz,maxx,maxy,maxz;
-                
-                ss>>minx;
-                ss>>miny;
-                ss>>minz;
-                ss>>maxx;
-                ss>>maxy;
-                ss>>maxz;
-  
-                glm::vec3 min{minx,miny,minz};
-                glm::vec3 max{maxx,maxy,maxz};
-                ss>>name;
-                ss>>mat_namebox; 
-                //std::string mat_namebox;
-                
-                std::shared_ptr<Shape> temp_ptr = std::make_shared<Box>
-                (
-                  Box{min,max,name,scene.materials[mat_namebox]}
-                );
-                  std::cout << *temp_ptr;
-                  scene.shapes_ptr.push_back(temp_ptr);
-  
-              }
-              if(keyword == "sphere"){
-                std::string name;
-                float x,y,z,r;
-                ss>>name;
-                ss>>x;
-                ss>>y;
-                ss>>z;
-                glm::vec3 middle{x,y,z};
-                ss>>r;
-                std::string mat_name;
-                ss>>mat_name; 
-                //alternative
-                            
-              /*std::cout <<mat_name;
-                ss>>sph.name_;
-                ss>>sph.middle_.x;
-                ss>>sph.middle_.y;
-                ss>>sph.middle_.z;
-                ss>>sph.r_;
-                ss>>sph.mat_;
-                std::cout << sph;sph.mat_=*materials(mat_name);*/
-                std::shared_ptr<Shape> temp_ptr = std::make_shared<Sphere>
-                (
-                  Sphere{middle,r,name,scene.materials[mat_name]}
-                );
-                  std::cout << *temp_ptr;              
-                  scene.shapes_ptr.push_back(temp_ptr);
-                // std::cout << sph;
-              }
-
+            if(keyword == "#"){
+                continue;
             }
-          if(keyword == "light"){
-              std::string name;
-              std::string mat_namelight;
-              float posx, posy, posz, ldr, ldg, ldb;
-              ss>>name;
-              ss>>posx;
-              ss>>posy;
-              ss>>posz;
-              glm::vec3 pos{posx,posy,posz};
-              ss>>ldr;
-              ss>>ldg;
-              ss>>ldb;
-              Color ld{ldr,ldg,ldb};
-              
-              
-                scene.lights.push_back( Light(name, pos, ld));
+
+            if(keyword == "define"){
+                ss>>keyword;
+                if(keyword == "material"){
+                    Material mat;
+                    ss>>mat.name;
+                    ss>>mat.ka.r;
+                    ss>>mat.ka.g;
+                    ss>>mat.ka.b;
+
+                    ss>>mat.ks.r;
+                    ss>>mat.ks.g;
+                    ss>>mat.ks.b;
+
+                    ss>>mat.kd.r;
+                    ss>>mat.kd.g;
+                    ss>>mat.kd.b;
+                    ss>>mat.m;
 
 
-          }
-          
-          if(keyword == "camera"){
-              std::string name;
-              float angle, posx, posy, posz;
-              ss>>name;
-              ss>>posx;
-              ss>>posy;
-              ss>>posz;
-              glm::vec3 pos{posx,posy,posz};
-              ss>>angle;
+                    scene.materials.insert({mat.name, mat});
+                    //materials[mat.name]= mat;
+                    std::cout << mat;
+                }
+                else if(keyword == "shape"){
+                    ss>>keyword;
 
 
-              /*std::shared_ptr<Camera> cam_ptr = std::make_shared<Camera>
-              (
-                Camera{name,pos,angle}
-              );*/
-//            Camera cam;            
-              //cam.name_=name;
-              //cam.pos_=pos;
-              //cam.angle_=angle; 
-              Camera cam{name,pos,angle};
-              std::cout << cam;
-              scene.camera=cam;            
-              
-          }
-          if(keyword == "amblight"){
-              float ambr,ambg,ambb;
-              ss>>ambr;
-              ss>>ambg;
-              ss>>ambb;
-              Color amb{ambr,ambg,ambb};
-              scene.amblight=amb;
+                    if(keyword == "box"){
+                        std::string name;
+                        std::string mat_namebox;
+                        float minx,miny,minz,maxx,maxy,maxz;
+
+                        ss>>minx;
+                        ss>>miny;
+                        ss>>minz;
+                        ss>>maxx;
+                        ss>>maxy;
+                        ss>>maxz;
+
+                        glm::vec3 min{minx,miny,minz};
+                        glm::vec3 max{maxx,maxy,maxz};
+                        ss>>name;
+                        ss>>mat_namebox;
+                        //std::string mat_namebox;
+
+                        std::shared_ptr<Shape> temp_ptr = std::make_shared<Box>
+                        (
+                            Box{min,max,name,scene.materials[mat_namebox]}
+                        );
+                            std::cout << *temp_ptr;
+                            scene.shapes_ptr.push_back(temp_ptr);
+
+                    }
+                    if(keyword == "sphere"){
+                        std::string name;
+                        float x,y,z,r;
+                        ss>>name;
+                        ss>>x;
+                        ss>>y;
+                        ss>>z;
+                        glm::vec3 middle{x,y,z};
+                        ss>>r;
+                        std::string mat_name;
+                        ss>>mat_name;
+                        //alternative
+
+                    /*std::cout <<mat_name;
+                        ss>>sph.name_;
+                        ss>>sph.middle_.x;
+                        ss>>sph.middle_.y;
+                        ss>>sph.middle_.z;
+                        ss>>sph.r_;
+                        ss>>sph.mat_;
+                        std::cout << sph;sph.mat_=*materials(mat_name);*/
+                        std::shared_ptr<Shape> temp_ptr = std::make_shared<Sphere>
+                        (
+                            Sphere{middle,r,name,scene.materials[mat_name]}
+                        );
+                            std::cout << *temp_ptr;
+                            scene.shapes_ptr.push_back(temp_ptr);
+                        // std::cout << sph;
+                    }
+                }
+                else if(keyword == "light"){
+                    std::string name;
+                    std::string mat_namelight;
+                    float posx, posy, posz, ldr, ldg, ldb;
+                    ss>>name;
+                    ss>>posx;
+                    ss>>posy;
+                    ss>>posz;
+                    glm::vec3 pos{posx,posy,posz};
+                    ss>>ldr;
+                    ss>>ldg;
+                    ss>>ldb;
+                    Color ld{ldr,ldg,ldb};
+
+
+                    scene.lights.push_back( Light(name, pos, ld));
+                }
+                else if(keyword == "camera"){
+                    std::string name;
+                    float angle, posx, posy, posz;
+                    ss>>name;
+                    ss>>posx;
+                    ss>>posy;
+                    ss>>posz;
+                    glm::vec3 pos{posx,posy,posz};
+                    ss>>angle;
+
+
+                    /*std::shared_ptr<Camera> cam_ptr = std::make_shared<Camera>
+                    (
+                        Camera{name,pos,angle}
+                    );*/
+                    //Camera cam;
+                    //cam.name_=name;
+                    //cam.pos_=pos;
+                    //cam.angle_=angle;
+                    Camera cam{name,pos,angle};
+                    std::cout << cam;
+                    scene.camera=cam;
+                }
+                else if(keyword == "amblight"){
+                    float ambr,ambg,ambb;
+                    ss>>ambr;
+                    ss>>ambg;
+                    ss>>ambb;
+                    Color amb{ambr,ambg,ambb};
+                    scene.amblight=amb;
+                }
+                else if(keyword == "background"){
+                    float backr, backg, backb;
+                    ss>>backr;
+                    ss>>backg;
+                    ss>>backb;
+                    Color back{backr,backg,backb};
+                    scene.background=back;
+                }
+                else if(keyword == "renderer"){
+                    ss>>keyword;
+
+                    ss>>scene.filename;
+
+                    ss>>scene.xres_;
+                    ss>>scene.yres_;
+                    /*std::shared_ptr<Scene> scene_ptr = std::make_shared<Scene>
+                        (
+                            Scene{filename, xres, yres, cam, amblight, background, materials, shapes, lights}
+                        );*/
+                    std::cout << scene.filename << "\n" << scene.xres_ << "\n" << scene.yres_ << "\n";
+                }
+            }
+
         }
-        if(keyword == "background"){
-              float backr, backg, backb;
-              ss>>backr;
-              ss>>backg;
-              ss>>backb;
-              Color back{backr,backg,backb};
-              scene.background=back;
-        }
-
-        if(keyword == "renderer"){
-          ss>>keyword;
-          std::string pic_name;
-          ss>>pic_name;
-          float xres, yres;
-          ss>>xres;
-          ss>>yres; 
-          /*std::shared_ptr<Scene> scene_ptr = std::make_shared<Scene>
-            (
-              Scene{filename, xres, yres, cam, amblight, background, materials, shapes, lights}
-            );*/
-        }
-      }
-
-      return scene;
-      myfile.close();
+        myfile.close();
     }
-  
-  }
+    else {
+        std::cout << "Unable to open file";
+    }
 
-  else std::cout << "Unable to open file"; 
+    return scene;
 }
+
 #endif
