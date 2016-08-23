@@ -53,7 +53,7 @@ while (int x = 0; x < width; ++x)
 
 
 
-  const std::size_t checkersize = 20;
+//  const std::size_t checkersize = 20;
 
     float distance=(((45/360)*2*3.1415)*0.5)/2*3.1415;
     glm::vec3 mittelp{0.0,0.0,-3.0};
@@ -63,17 +63,18 @@ while (int x = 0; x < width; ++x)
     int height_= scene_.yres_;
     int width_= scene_.xres_;
 
-
+    float h = height_/2;
   for (unsigned y = 0; y < height_; ++y) {
     //std::cout << y << "\n";
-    int h = height_/2;
 
+
+      float w = -width_/2;
     for (unsigned x = 0; x < width_; ++x) {
-      int w = -(width_/2);
         //std::cout << "x = " << x << "\n";
       //
       // p.color = raytrace(ray, depth);
-      glm::vec3 origin{w,h,0.0};
+      glm::vec3 origin{w/(width_/2),h/(height_/2),0.0};
+      std::cout <<"origin vec " << origin.x << ", " << origin.y << ", " << origin.z << " \n";
       Ray camray{origin, onedirection};
       Pixel p(x,y);
       Hit hitteter=kugel.intersect(camray);
