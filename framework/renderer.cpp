@@ -56,7 +56,7 @@ while (int x = 0; x < width; ++x)
 //  const std::size_t checkersize = 20;
 
     float distance=(((45/360)*2*3.1415)*0.5)/2*3.1415;
-    glm::vec3 mittelp{0.0,0.0,-3.0};
+    glm::vec3 mittelp{0.0,0.0,-30.0};
     float rad = 1;
     Sphere kugel{mittelp, rad};
     glm::vec3 onedirection{0.0,0.0,-1.0};
@@ -79,7 +79,7 @@ while (int x = 0; x < width; ++x)
       Pixel p(x,y);
       Hit hitteter=kugel.intersect(camray);
       if (hitteter.hit_ == true){
-        p.color = Color(1.0,1.0,1.0);
+        p.color = Color(hitteter.normal_.x,hitteter.normal_.y,hitteter.normal_.z);
       } else{
         p.color = Color(0.0,0.0,0.0);
       }
