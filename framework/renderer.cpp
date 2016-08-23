@@ -74,7 +74,7 @@ while (int x = 0; x < width; ++x)
       //
       // p.color = raytrace(ray, depth);
       glm::vec3 origin{w/(width_/2),h/(height_/2),0.0};
-      std::cout <<"origin vec " << origin.x << ", " << origin.y << ", " << origin.z << " \n";
+//      std::cout <<"origin vec " << origin.x << ", " << origin.y << ", " << origin.z << " \n";
       Ray camray{origin, onedirection};
       Pixel p(x,y);
       Hit hitteter=kugel.intersect(camray);
