@@ -15,7 +15,7 @@
 struct Color
 {
   Color(float red, float green, float blue) : r(red), g(green), b(blue) {}
-  
+
   Color() : r(0.0), g(0.0), b(0.0) {}
 
   float r;
@@ -55,6 +55,26 @@ struct Color
   {
     auto tmp(a);
     tmp -= b;
+    return tmp;
+  }
+
+  friend Color operator*(Color const& a, Color const& b)
+  {
+    auto tmp(a);
+    tmp.r = a.r * b.r;
+    tmp.g = a.g * b.g;
+    tmp.b = a.b * b.b;
+
+    return tmp;
+  }
+
+  friend Color operator*(Color const& a, float b)
+  {
+    auto tmp(a);
+    tmp.r = a.r * b;
+    tmp.g = a.g * b;
+    tmp.b = a.b * b;
+
     return tmp;
   }
 };

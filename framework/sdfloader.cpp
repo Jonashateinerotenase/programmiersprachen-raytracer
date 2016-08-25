@@ -177,6 +177,7 @@ Scene load_sdf_file(std::string const& filename) {
                     ss>>ambb;
                     Color amb{ambr,ambg,ambb};
                     scene.amblight=amb;
+                    std::cout <<amb;
                 }
                 else if(keyword == "background"){
                     float backr, backg, backb;
@@ -185,6 +186,7 @@ Scene load_sdf_file(std::string const& filename) {
                     ss>>backb;
                     Color back{backr,backg,backb};
                     scene.background=back;
+                    std::cout <<back;
                 }
                 else if(keyword == "renderer"){
                     ss>>keyword;

@@ -41,6 +41,7 @@ void Renderer::render()
 
 
         float distance=(((scene_.camera.angle()/360)*2*3.1415)*0.5)/2*3.1415;
+        std::cout <<"min. Distanz: " <<distance << "\n";
         int height_= scene_.yres_;
         int width_= scene_.xres_;
 
@@ -52,15 +53,31 @@ void Renderer::render()
             float w = -width_/2;
         for (unsigned x = 0; x < width_; ++x) {
 
-            glm::vec3 onedirection {w/(width_/2),h/(height_/2), distance}
-            Ray camray{scene_.camera.pos(), onedirection};
+            glm::vec3 onedirection {w/(width_/2),h/(height_/2), distance};
+            Ray camray = scene_.camera.castray(onedirection);
+//            Ray camray{scene_.camera.pos(), onedirection};
             Pixel p(x,y);
 //            Hit hitteter=kugel.intersect(camray);
-            if (hitteter.hit_ == true){
-                p.color = Color(hitteter.normal_.x,hitteter.normal_.y,hitteter.normal_.z);
-            } else{
-                p.color = Color(0.0,0.0,0.0);
+            Shape* first_hit;
+            double shortest = 999999.9;
+
+            for (std::vector<std::shared_ptr<Shape>>::iterator i = scene_.shapes_ptr.begin();i != scene_.shapes_ptr.end();++i){
+                Hit hit = (*i)->intersect(camray);
+
+                if(hit.hit_ == true){
+                    if(hit.distance_ < shortest){
+                        shortest = hit.distance_;
+                        first_hit = hit.sptr_;
+
+                        p.color = shade(camray, hit);
+                    }
+                }
             }
+
+            if(shortest == 999999.9){
+                p.color = scene_.background;
+            }
+
             write(p);
             ++w;
         }
@@ -120,6 +137,81 @@ while (int x = 0; x < width; ++x)
     }
     ppm_.save(scene_.filename);
     std::cout << "saved file in: " << scene_.filename << " amazing! \n";*/
+}
+
+Color Renderer::shade(Ray const& ray, Hit const& hit){
+    Color ka = hit.sptr_->getmaterial().ka;
+    Color kd = hit.sptr_->getmaterial().kd;
+    Color ks = hit.sptr_->getmaterial().ks;
+
+    Color Ia = scene_.amblight;
+    Color L_amb = Ia * ka;
+    Color Id;
+    Color L_diff_spec;
+    Color L_gesamt;
+
+    float angle1;
+    float angle2;
+
+    std::vector<Color> Id_vec;
+    std::vector<float> a1_vec;
+    std::vector<float> a2_vec;
+
+    glm::vec3 norm = glm::normalize(hit.normal_);
+    glm::vec3 rref;
+    glm::vec3 ray_inv_dir = glm::normalize(-ray.direction);
+    glm::vec3 lightvec;
+
+
+    for (std::vector<Light>::iterator i = scene_.lights.begin();i != scene_.lights.end();++i){
+
+        Ray lightray{hit.target_ , i->pos_ - (hit.target_ + norm)};
+
+            for (std::vector<std::shared_ptr<Shape>>::iterator j = scene_.shapes_ptr.begin();j != scene_.shapes_ptr.end();++j){
+                Hit shadowhit = (*j)->intersect(lightray);
+                lightvec = i->pos_ - hit.target_;
+
+                if(shadowhit.distance_ < std::abs(lightvec.x) + std::abs(lightvec.y) + std::abs(lightvec.z)){
+                    Id = {0.0,0.0,0.0};
+                    angle1 = 0.0;
+                    angle2 = 0.0;
+
+                    break;
+                }
+
+                else{
+
+                    Id = i->ld_;
+                    glm::vec3 norm_lightvec = glm::normalize(lightvec);
+                    angle1 = std::max(0.0f, glm::dot(norm, norm_lightvec));
+
+                    rref = 2.0f * angle1 * norm - norm_lightvec;
+                    angle2 = std::max(0.0f, glm::dot(rref, ray_inv_dir));
+
+                }
+            }
+
+            Id_vec.push_back(Id);
+            a1_vec.push_back(angle1);
+            a2_vec.push_back(pow(angle2, hit.sptr_->getmaterial().m));
+
+            Id = {0.0,0.0,0.0};
+            angle1 = 0.0;
+            angle2 = 0.0;
+            lightvec = {0.0,0.0,0.0};
+
+    }
+
+    for(int t = 0; t < Id_vec.size(); ++t){
+        L_diff_spec = L_diff_spec + (Id_vec[t]*((kd*a1_vec[t]) + (ks*a2_vec[t])));
+
+    }
+
+    L_gesamt = L_diff_spec + L_amb;
+
+//    std::cout << L_gesamt;
+    return L_gesamt;
+
 }
 
 void Renderer::write(Pixel const& p)
