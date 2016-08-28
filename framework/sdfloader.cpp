@@ -56,13 +56,15 @@ Scene load_sdf_file(std::string const& filename) {
                     ss>>mat.ka.g;
                     ss>>mat.ka.b;
 
+                    ss>>mat.kd.r;
+                    ss>>mat.kd.g;
+                    ss>>mat.kd.b;
+                    
                     ss>>mat.ks.r;
                     ss>>mat.ks.g;
                     ss>>mat.ks.b;
 
-                    ss>>mat.kd.r;
-                    ss>>mat.kd.g;
-                    ss>>mat.kd.b;
+                   
                     ss>>mat.m;
 
 
