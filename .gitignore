@@ -20,6 +20,7 @@
 *.out
 *.app
 
+*.ppm
 checkerboard.ppm
 
 build

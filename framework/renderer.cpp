@@ -45,7 +45,7 @@ void Renderer::render()
         int height_= scene_.yres_;
         int width_= scene_.xres_;
 
-        float h = height_/2;
+        float h = -height_/2;
     for (unsigned y = 0; y < height_; ++y) {
         //std::cout << y << "\n";
 
@@ -78,10 +78,16 @@ void Renderer::render()
                 p.color = scene_.background;
             }
 
+            if(y == 1){
+                if(x == 1){
+                    p.color = {1.0,0.0,0.0};
+                }
+            }
+
             write(p);
             ++w;
         }
-        --h;
+        ++h;
     }
     ppm_.save(scene_.filename);
     std::cout << "saved file in: " << scene_.filename << " amazing! \n";
