@@ -152,6 +152,7 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
 
     float angle1;
     float angle2;
+    float shadowbias = 0.009f;
 
     std::vector<Color> Id_vec;
     std::vector<float> a1_vec;
@@ -165,7 +166,7 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
 
     for (std::vector<Light>::iterator i = scene_.lights.begin();i != scene_.lights.end();++i){
 
-        Ray lightray{hit.target_ , i->pos_ - (hit.target_ + norm)};
+        Ray lightray{hit.target_ + (shadowbias*norm) , i->pos_ - (hit.target_ + (shadowbias* norm))};
 
             for (std::vector<std::shared_ptr<Shape>>::iterator j = scene_.shapes_ptr.begin();j != scene_.shapes_ptr.end();++j){
                 Hit shadowhit = (*j)->intersect(lightray);
