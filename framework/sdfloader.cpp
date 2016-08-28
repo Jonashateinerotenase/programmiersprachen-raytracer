@@ -59,7 +59,7 @@ Scene load_sdf_file(std::string const& filename) {
                     ss>>mat.kd.r;
                     ss>>mat.kd.g;
                     ss>>mat.kd.b;
-                    
+
                     ss>>mat.ks.r;
                     ss>>mat.ks.g;
                     ss>>mat.ks.b;
@@ -74,7 +74,6 @@ Scene load_sdf_file(std::string const& filename) {
                 }
                 else if(keyword == "shape"){
                     ss>>keyword;
-
 
                     if(keyword == "box"){
                         std::string name;
@@ -130,6 +129,29 @@ Scene load_sdf_file(std::string const& filename) {
                             std::cout << *temp_ptr;
                             scene.shapes_ptr.push_back(temp_ptr);
                         // std::cout << sph;
+                    }
+                    if(keyword == "composite"){
+                        std::cout << "composite erstellen" /*<< comp[1]*/ << "\n";
+                        std::string name;
+                        ss>>name;
+                        std::vector<std::shared_ptr<Shape>> comp;
+                        ss>>keyword;
+                        while(keyword != "endcomp"){
+                            for (std::vector<std::shared_ptr<Shape>>::iterator i = scene.shapes_ptr.begin();i != scene.shapes_ptr.end();++i){
+                            
+
+                                    if(keyword == (*i)->getname()){
+                                        comp.push_back(*i);
+                                        std::cout << *comp[0] << "\n";    
+                                }
+
+
+                            }
+                            ss>>keyword;
+                        }
+                            //insertmap
+                        scene.composites.insert({name,comp});
+
                     }
                 }
                 else if(keyword == "light"){
