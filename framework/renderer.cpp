@@ -53,7 +53,7 @@ void Renderer::render()
             float w = -width_/2;
         for (unsigned x = 0; x < width_; ++x) {
 
-            glm::vec3 onedirection {w/(width_/2),h/(height_/2), distance};
+            glm::vec3 onedirection {w/(width_/2),h/(height_/2), -distance};
             Ray camray = scene_.camera.castray(onedirection);
 //            Ray camray{scene_.camera.pos(), onedirection};
             Pixel p(x,y);
