@@ -179,12 +179,16 @@ Scene load_sdf_file(std::string const& filename) {
                 }
                 else if(keyword == "camera"){
                     std::string name;
-                    float angle, posx, posy, posz;
+                    float angle, posx, posy, posz, upx,upy,upz;
                     ss>>name;
                     ss>>posx;
                     ss>>posy;
                     ss>>posz;
+                    ss>>upx;
+                    ss>>upy;
+                    ss>>upz;
                     glm::vec3 pos{posx,posy,posz};
+                    glm::vec3 up{upx,upy,upz};
                     ss>>angle;
 
 
@@ -196,7 +200,7 @@ Scene load_sdf_file(std::string const& filename) {
                     //cam.name_=name;
                     //cam.pos_=pos;
                     //cam.angle_=angle;
-                    Camera cam{name,pos,angle};
+                    Camera cam{name,pos,up, angle};
                     std::cout << cam;
                     scene.camera=cam;
                 }
