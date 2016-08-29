@@ -38,14 +38,12 @@ void Renderer::render()
 
     float pic_ymax =2/scene_.xres_*scene_.yres_;
 
+    float distance=1 /tan((scene_.camera.angle()*3.14159265)/180);
+    std::cout <<"min. Distanz: " <<distance << "\n";
+    int height_= scene_.yres_;
+    int width_= scene_.xres_;
 
-
-        float distance=1 /tan((scene_.camera.angle()*3.14159265)/180);
-        std::cout <<"min. Distanz: " <<distance << "\n";
-        int height_= scene_.yres_;
-        int width_= scene_.xres_;
-
-        float h = -height_/2;
+    float h = -height_/2;
     for (unsigned y = 0; y < height_; ++y) {
         //std::cout << y << "\n";
 
@@ -68,8 +66,14 @@ void Renderer::render()
                     if(hit.distance_ < shortest){
                         shortest = hit.distance_;
                         first_hit = hit.sptr_;
+                        //std::cout <<"Normalvektor: " << hit.normal_.x <<", " << hit.normal_.y <<", " << hit.normal_.z  << "\n";
 
                         p.color = shade(camray, hit);
+                        /*p.color = Color{
+                            std::max(-1.0f, std::min(1.0f, hit.normal_.x)) / 2.0f + 0.5f,
+                            std::max(-1.0f, std::min(1.0f, hit.normal_.y)) / 2.0f + 0.5f,
+                            std::max(-1.0f, std::min(1.0f, hit.normal_.z)) / 2.0f + 0.5f
+                        };*/
                     }
                 }
             }
@@ -78,11 +82,11 @@ void Renderer::render()
                 p.color = scene_.background;
             }
 
-            if(y == 1){
+/*            if(y == 1){
                 if(x == 1){
                     p.color = {1.0,0.0,0.0};
                 }
-            }
+            }*/
 
             write(p);
             ++w;
@@ -158,7 +162,7 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
 
     float angle1;
     float angle2;
-    float shadowbias = 0.009f;
+    float shadowbias = 0.9f;
 
     std::vector<Color> Id_vec;
     std::vector<float> a1_vec;
@@ -167,21 +171,24 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
     glm::vec3 norm = glm::normalize(hit.normal_);
     glm::vec3 rref;
     glm::vec3 ray_inv_dir = glm::normalize(-ray.direction);
-    glm::vec3 lightvec;
+    // glm::vec3 ray_inv_dir = glm::normalize(ray.origin - hit.target_);
 
 
     for (std::vector<Light>::iterator i = scene_.lights.begin();i != scene_.lights.end();++i){
+        glm::vec3 lightvec = glm::normalize(glm::vec3{ i->pos_ - hit.target_ });
 
-        Ray lightray{hit.target_ + (shadowbias*norm) , i->pos_ - (hit.target_ + (shadowbias* norm))};
+
+        Ray lightray{hit.target_ + (shadowbias*norm), lightvec};
+        std::cout << hit.normal_.x << " " << hit.normal_.y << " " << hit.normal_.z << std::endl;
 
             for (std::vector<std::shared_ptr<Shape>>::iterator j = scene_.shapes_ptr.begin();j != scene_.shapes_ptr.end();++j){
                 Hit shadowhit = (*j)->intersect(lightray);
-                lightvec = i->pos_ - hit.target_;
 
-                if(shadowhit.distance_ < std::abs(lightvec.x) + std::abs(lightvec.y) + std::abs(lightvec.z)){
+                if(shadowhit.hit_ && shadowhit.distance_ < sqrt(pow(lightvec.x, 2) + pow(lightvec.y, 2) + pow(lightvec.z,2))){
                     Id = {0.0,0.0,0.0};
                     angle1 = 0.0;
                     angle2 = 0.0;
+                    //std::cout << "shadowhit distance_ " << shadowhit.distance_ << " < " << sqrt(pow(lightvec.x, 2) + pow(lightvec.y, 2) + pow(lightvec.z,2)) << std::endl;
 
                     break;
                 }
@@ -189,16 +196,16 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
                 else{
 
                     Id = i->ld_;
-                    glm::vec3 norm_lightvec = glm::normalize(lightvec);
-                    angle1 = std::max(0.0f, glm::dot(norm, norm_lightvec));
+                    angle1 = std::max(0.0f, glm::dot(norm, lightvec));
 
-                    rref = 2.0f * angle1 * norm - norm_lightvec;
+                    rref = 2.0f * angle1 * norm - lightvec;
                     angle2 = std::max(0.0f, glm::dot(rref, ray_inv_dir));
 
                 }
             }
 
             Id_vec.push_back(Id);
+
             a1_vec.push_back(angle1);
             a2_vec.push_back(pow(angle2, hit.sptr_->getmaterial().m));
 
@@ -215,6 +222,7 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
     }
 
     L_gesamt = L_diff_spec + L_amb;
+
 
 //    std::cout << L_gesamt;
     return L_gesamt;
