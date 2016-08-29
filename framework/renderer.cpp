@@ -40,7 +40,7 @@ void Renderer::render()
 
 
 
-        float distance=(((scene_.camera.angle()/360)*2*3.1415)*0.5)/2*3.1415;
+        float distance=1 /tan((scene_.camera.angle()*3.14159265)/180);
         std::cout <<"min. Distanz: " <<distance << "\n";
         int height_= scene_.yres_;
         int width_= scene_.xres_;
