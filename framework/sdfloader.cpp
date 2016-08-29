@@ -79,7 +79,8 @@ Scene load_sdf_file(std::string const& filename) {
                         std::string name;
                         std::string mat_namebox;
                         float minx,miny,minz,maxx,maxy,maxz;
-
+                        ss>>name;
+                        
                         ss>>minx;
                         ss>>miny;
                         ss>>minz;
@@ -89,7 +90,7 @@ Scene load_sdf_file(std::string const& filename) {
 
                         glm::vec3 min{minx,miny,minz};
                         glm::vec3 max{maxx,maxy,maxz};
-                        ss>>name;
+                        
                         ss>>mat_namebox;
                         //std::string mat_namebox;
 
