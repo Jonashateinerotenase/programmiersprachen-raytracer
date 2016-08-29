@@ -179,7 +179,7 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
 
 
         Ray lightray{hit.target_ + (shadowbias*norm), lightvec};
-//        std::cout << hit.normal_.x << " " << hit.normal_.y << " " << hit.normal_.z << std::endl;
+        //std::cout << hit.normal_.x << " " << hit.normal_.y << " " << hit.normal_.z << std::endl;
 
             for (std::vector<std::shared_ptr<Shape>>::iterator j = scene_.shapes_ptr.begin();j != scene_.shapes_ptr.end();++j){
                 Hit shadowhit = (*j)->intersect(lightray);
@@ -224,7 +224,7 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
     L_gesamt = L_diff_spec + L_amb;
 
 
-//    std::cout << L_gesamt;
+//    std::cout << L_diff_spec << "<- diffspec, amblight-> " << L_amb << std::endl;
     return L_gesamt;
 
 }
