@@ -131,11 +131,13 @@ Scene load_sdf_file(std::string const& filename) {
                         // std::cout << sph;
                     }
                     if(keyword == "composite"){
-                        std::cout << "composite erstellen" /*<< comp[1]*/ << "\n";
+                        std::cout << "\n" << "-------------------------" << "\n";
                         std::string name;
                         ss>>name;
+                        std::cout << name << " erstellen:" << "\n";
                         std::vector<std::shared_ptr<Shape>> comp;
                         ss>>keyword;
+                        std::cout << "Folgende Objekte sind enthalten:"<< "\n";
                         while(keyword != "endcomp"){
                             for (std::vector<std::shared_ptr<Shape>>::iterator i = scene.shapes_ptr.begin();i != scene.shapes_ptr.end();++i){
                             
@@ -151,6 +153,7 @@ Scene load_sdf_file(std::string const& filename) {
                         }
                             //insertmap
                         scene.composites.insert({name,comp});
+                        std::cout<< "-------------------------"<< "\n";
 
                     }
                 }
@@ -223,7 +226,7 @@ Scene load_sdf_file(std::string const& filename) {
                         (
                             Scene{filename, xres, yres, cam, amblight, background, materials, shapes, lights}
                         );*/
-                    std::cout << scene.filename << "\n" << scene.xres_ << "\n" << scene.yres_ << "\n";
+                    std::cout << scene.filename << "\n" <<"Resolution: "<< scene.xres_ << " x " << scene.yres_ << "\n";
                 }
             }
 
