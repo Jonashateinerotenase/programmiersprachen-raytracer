@@ -9,10 +9,11 @@ class Camera
 {
 public:
 	Camera();
-	Camera(std::string const& name, glm::vec3 const& pos, float angle);
+	Camera(std::string const& name, glm::vec3 const& pos, glm::vec3 const& up, float angle);
 
 	std::string const& name() const;
 	glm::vec3 const& pos() const; 
+	glm::vec3 const& up() const;
 	float const& angle() const;
 
 	Ray const castray(glm::vec3 const& dir) const;
@@ -25,6 +26,7 @@ public:
 private:
 	std::string name_;
 	glm::vec3 pos_;
+	glm::vec3 up_;
 	float angle_;
 };
 #endif
