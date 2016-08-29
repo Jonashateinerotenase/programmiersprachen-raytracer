@@ -144,7 +144,7 @@ Scene load_sdf_file(std::string const& filename) {
 
                                     if(keyword == (*i)->getname()){
                                         comp.push_back(*i);
-                                        std::cout << *comp[0] << "\n";    
+                                        std::cout << *(*i) << "\n";    
                                 }
 
 
