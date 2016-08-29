@@ -1,5 +1,6 @@
 #include "box.hpp"
 #include <algorithm>
+#include <cmath>
 
 Box::Box():
 Shape(),
@@ -111,19 +112,29 @@ Hit Box::intersect(Ray const& ray) {
       std::numeric_limits<float>::infinity()
     };
 
-    float bias = 0.0009f;
+    float bias = 0.00009f;
     //getting the normal vec on the side of the intersection
-    if (abs(max_.x) - abs(b_hit.target_.x) < bias) {
+
+    //std::cout << b_hit.target_.x << " " << b_hit.target_.y << " " << b_hit.target_.z << std::endl;
+
+    if ((max_.x - b_hit.target_.x < bias) && (max_.x - b_hit.target_.x> -bias)) {
         normal = glm::vec3{1.0, 0.0, 0.0};
-    } else if (abs(min_.x) - abs(b_hit.target_.x) < bias) {
+    }
+    else if ((min_.x - b_hit.target_.x < bias) && (min_.x - b_hit.target_.x> -bias)) {
         normal = glm::vec3{-1.0, 0.0, 0.0};
-    } else if (abs(max_.y) - abs(b_hit.target_.y) < bias) {
+        //std::cout << "ere we go! minx:" << min_.x << "targetx" <<abs(b_hit.target_.x) << "\n";
+    }
+    else if ((max_.y - b_hit.target_.y < bias) && (max_.y - b_hit.target_.y> -bias)) {
         normal = glm::vec3{0.0, 1.0, 0.0};
-    } else if (abs(min_.y) - abs(b_hit.target_.y) < bias) {
+        //std::cout <<"ere we go" <<abs(abs(max_.y) - abs(b_hit.target_.y)) << "\n";
+    }
+    else if ((min_.y - b_hit.target_.y < bias) && (min_.y - b_hit.target_.y> -bias)) {
         normal = glm::vec3{0.0, -1.0, 0.0};
-    } else if (abs(max_.z) - abs(b_hit.target_.z) < bias) {
+    }
+    else if ((max_.z - b_hit.target_.z < bias) && (max_.z - b_hit.target_.z> -bias)) {
         normal = glm::vec3{0.0, 0.0, 1.0};
-    } else if (abs(min_.z) - abs(b_hit.target_.z) < bias) {
+    }
+    else if ((min_.z - b_hit.target_.z < bias) && (min_.z - b_hit.target_.z> -bias)) {
         normal = glm::vec3{0.0, 0.0, -1.0};
     }
     b_hit.normal_ = normal;
