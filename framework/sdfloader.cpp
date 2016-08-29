@@ -14,6 +14,7 @@
 #include "material.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
+#include "triangle.hpp"
 #include "light.hpp"
 #include "camera.hpp"
 #include "scene.hpp"
@@ -130,6 +131,33 @@ Scene load_sdf_file(std::string const& filename) {
                             std::cout << *temp_ptr;
                             scene.shapes_ptr.push_back(temp_ptr);
                         // std::cout << sph;
+                    }
+                    if (keyword == "triangle"){
+                        std::string name;
+                        std::string mat_name;
+                        float  triforceone_x, triforceone_y, triforceone_z, triforcetwo_x, triforcetwo_y, triforcetwo_z, triforcethree_x, triforcethree_y, triforcethree_z;
+
+                        ss>>name;
+                        ss>>triforceone_x;
+                        ss>>triforceone_y;
+                        ss>>triforceone_z;
+                        ss>>triforcetwo_x;
+                        ss>>triforcetwo_y;
+                        ss>>triforcetwo_z;
+                        ss>>triforcethree_x;
+                        ss>>triforcethree_y;
+                        ss>>triforcethree_z;
+                        glm::vec3 triforceone{triforceone_x,triforceone_y,triforceone_z};
+                        glm::vec3 triforcetwo{triforcetwo_x,triforcetwo_y,triforcetwo_z};
+                        glm::vec3 triforcethree{triforcethree_x,triforcethree_y,triforcethree_z};
+                        ss>>mat_name;
+
+                        std::shared_ptr<Shape> temp_ptr = std::make_shared<Triangle>
+                        (
+                            Triangle{triforceone,triforcetwo,triforcethree,name,scene.materials[mat_name]}
+                        );
+                            std::cout << *temp_ptr;
+                            scene.shapes_ptr.push_back(temp_ptr);
                     }
                     if(keyword == "composite"){
                         std::cout << "\n" << "-------------------------" << "\n";
