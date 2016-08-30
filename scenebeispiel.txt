@@ -6,21 +6,21 @@ define material pink 0.255 0.2 0.147 0.255 0.2 0.147 1 1 1 30
 define material white 1.0 1.0 1.0 1.0 1.0 1.0 1 1 1 30
 
  define shape sphere kuegelcheneins 0.0 4.0 -10.0 3 blue
-define shape sphere kuegelchenzwei 0.0 2.0 -10.0 0.3 blue
- define shape sphere kuegelchendrei 0.0 -3.0 -14.0 1 pink
- define shape sphere kuegelchenvier 5.0 0.0 -14.0 1 red
- define shape sphere kuegelchen 0.0 -2.0 -3.0 9.5 black
+#define shape sphere kuegelchenzwei 0.0 2.0 -10.0 0.3 blue
+ #define shape sphere kuegelchendrei 0.0 -3.0 -14.0 1 pink
+ #define shape sphere kuegelchenvier 5.0 0.0 -14.0 1 red
+ #define shape sphere kuegelchen 0.0 -2.0 -3.0 9.5 black
 define shape box beins 0.0 -2.0 -5.0 0.0 2.0 -8.0 red
-define shape box boxiii -6 4 -10 -4 6 11 blue
+#define shape box boxiii -6 4 -10 -4 6 11 blue
  define light lichtlein 5 0.0 10 0.5 0.5 0.5
  define light l1 5 -5.0 10 0.75 0.75 0.75
 define light camlight 5.0 10.0 -1.0 0.70 0.70 0.70
 define camera kameramann 0.0 0.0 0.0 0.0 1.0 0.0 45.0
 
- define shape sphere ball1 2 3 4 1 blue
+# define shape sphere ball1 2 3 4 1 blue
 
 define amblight 0.2 0.2 0.2
 define background 0.0 0.1 0.0
- define shape composite firstcomp kuegelchen kuegelcheneins kuegelchenvier endcomp
+# define shape composite firstcomp kuegelchen kuegelcheneins kuegelchenvier endcomp
 
 define renderer eye scene1.ppm 2500 2500 

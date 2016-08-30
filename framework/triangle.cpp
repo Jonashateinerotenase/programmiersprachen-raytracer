@@ -43,9 +43,29 @@ std::ostream& Triangle::print(std::ostream& os) const{
 }*/
 
 Hit Triangle::intersect(Ray const& ray) {
-  //definiere t hier -> muss eigentlich abstand zwischen Anfang und dem jeweiligen punkt sein oder?
-  float t = 5.0f;
-  glm::vec3 sub21{0.0f,0.0f,0.0f};
+  Hit HelloHitty;
+  glm::vec3 norm = crossp(ecke1_-ecke2_,ecke1_-ecke3_);
+  float d = skalar(norm , ray.direction);
+  if(d != 0)
+  {
+    float distance = (-(norm.x*(ray.origin.x - ecke1_.x))-(norm.y*(ray.origin.y - ecke1_.y))
+      -(norm.z*(ray.origin.z - ecke1_.z))) / d;
+    if(distance > 0)
+    { 
+      HelloHitty.target_  = ray.origin + (distance * ray.direction);
+      {
+        if(skalar(ecke3_-ecke1_, ecke1_ - HelloHitty.target_) <= skalar(ecke3_ - ecke1_, ecke2_ - ecke1_) and skalar(ecke1_-ecke2_, ecke2_ - HelloHitty.target_) <= skalar(ecke1_ - ecke2_, ecke3_ - ecke2_) and skalar(ecke2_-ecke3_, ecke3_ - HelloHitty.target_) <= skalar(ecke2_ - ecke3_, ecke1_ - ecke3_) )
+        {
+        HelloHitty.hit_ = true;
+        HelloHitty.normal_ = norm;
+        HelloHitty.sptr_ = this;
+        HelloHitty.distance_= distance; // glm::length(HelloHitty.target_ - ray.origin);
+        }
+      }
+    }
+  }
+  return HelloHitty;
+  /*glm::vec3 sub21{0.0f,0.0f,0.0f};
   sub21.x = ecke2_.x - ecke1_.x;
   sub21.y = ecke2_.y - ecke1_.y;
   sub21.z = ecke2_.z - ecke1_.z;
@@ -57,16 +77,14 @@ Hit Triangle::intersect(Ray const& ray) {
 
   glm::vec3 N = crossp(sub21,sub31);
   float A = betrag(N);
-  Hit HelloHitty;//ein false hit halt -> nur koordinaten müssen da iwie rein zum returnen
-  //parallel?
+  Hit HelloHitty;
   float NdotprodwithRaydir = skalar(N, ray.direction);
-  if (fabs(NdotprodwithRaydir) < 0.005){
+  if (fabs(NdotprodwithRaydir) < 0.005)return HelloHitty;
     
-    return HelloHitty; //eig. no Hit!!!!! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  }
+    
   float d = skalar(N,ecke1_);
-  //teil ausgelassen weil unnötig wegen dahinter..
-  glm::vec3 p = ray.origin + t * ray.direction;// hier nomma gucken woher t :/
+  float t = (skalar(N,ray.origin)+d) / NdotprodwithRaydir;
+  glm::vec3 p = ray.origin + t * ray.direction;
   glm::vec3 C{0.0f,0.0f,0.0f};
 
   //ecke 1
@@ -86,15 +104,16 @@ Hit Triangle::intersect(Ray const& ray) {
   glm::vec3 vpthree = p - ecke3_;
   C=crossp(ecke3_,vpthree);
   if(skalar(N,C)<0)return HelloHitty;
-  glm::vec3 target{0.0,0.0,-5.0};//?? <<<<<<<<<<<<<<<<<<<<<<<<<<<!!!!!!!
-  glm::vec3 normale{0.0,0.0,1.0};//??<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!!!!!!!
+  glm::vec3 target= ray.origin + glm::normalize(ray.direction) * t;
+  
+  glm::vec3 normale= glm::normalize(crossp(sub21,sub31));
   Hit trifft;
   trifft.hit_=true;
   trifft.distance_=t;
   trifft.target_=target;
   trifft.normal_=normale;
   trifft.sptr_=this;
-  return trifft;//<<<<<<<<<<<
+  return trifft;*/
 
 }
 /*bool rayTriangleIntersect( 
@@ -144,8 +163,8 @@ Hit Triangle::intersect(Ray const& ray) {
  
     // edge 2
     Vec3f edge2 = v0 - v2; 
-    Vec3f vp2 = P - v2; 
-    C = edge2.crossProduct(vp2); 
+    Vec3f vecke2_ = P - v2; 
+    C = edge2.crossProduct(vecke2_); 
     if (N.dotProduct(C) < 0) return false; // P is on the right side; 
  
     return true; // this ray hits the triangle 
