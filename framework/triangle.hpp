@@ -3,6 +3,8 @@
 
 #include "shape.hpp"
 #include <glm/vec3.hpp>
+#include "vecops.hpp"
+#include "hit.hpp"
 
 
 class Triangle : public Shape

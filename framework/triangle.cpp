@@ -1,6 +1,7 @@
 #include "triangle.hpp"
 #include <algorithm>
 
+
 Triangle::Triangle():
 Shape(),
 ecke1_{1.0f,0.0f,-2.0f},
@@ -36,19 +37,66 @@ std::ostream& Triangle::print(std::ostream& os) const{
     << "\n";	
 }
 
-Hit Triangle::intersect(Ray const& ray) {
+/*Hit Triangle::intersect(Ray const& ray) {
   Hit defaulthit;
   return defaulthit;
-}
-
-/*Hit Triangle::intersect(Ray const& ray) {
-  glm::vec3 sub21 = ecke2_ - ecke1_;
-  glm::vec3 sub31 = ecke3_ - ecke1_;
-  glm::vec3 N{0.0,0.0,0.0};
-  N.x=sub21.y*sub31.z-sub21.z*sub31.y;
-  N.y=sub21.z*sub31.x-sub21.x*sub31.z;
-  N.z=sub21.x*sub31.y-sub21.y*sub31.x;
 }*/
+
+Hit Triangle::intersect(Ray const& ray) {
+  //definiere t hier -> muss eigentlich abstand zwischen Anfang und dem jeweiligen punkt sein oder?
+  float t = 5.0f;
+  glm::vec3 sub21{0.0f,0.0f,0.0f};
+  sub21.x = ecke2_.x - ecke1_.x;
+  sub21.y = ecke2_.y - ecke1_.y;
+  sub21.z = ecke2_.z - ecke1_.z;
+
+  glm::vec3 sub31{0.0f,0.0f,0.0f};
+  sub31.x = ecke3_.x - ecke1_.x;
+  sub31.y = ecke3_.y - ecke1_.y;
+  sub31.z = ecke3_.z - ecke1_.z;
+
+  glm::vec3 N = crossp(sub21,sub31);
+  float A = betrag(N);
+  Hit HelloHitty;//ein false hit halt -> nur koordinaten müssen da iwie rein zum returnen
+  //parallel?
+  float NdotprodwithRaydir = skalar(N, ray.direction);
+  if (fabs(NdotprodwithRaydir) < 0.005){
+    
+    return HelloHitty; //eig. no Hit!!!!! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  }
+  float d = skalar(N,ecke1_);
+  //teil ausgelassen weil unnötig wegen dahinter..
+  glm::vec3 p = ray.origin + t * ray.direction;// hier nomma gucken woher t :/
+  glm::vec3 C{0.0f,0.0f,0.0f};
+
+  //ecke 1
+  glm::vec3 eckeone = ecke2_-ecke1_;
+  glm::vec3 vpone = p - ecke1_;
+  C=crossp(ecke1_,vpone);
+  if(skalar(N,C)<0)return HelloHitty;
+
+  //ecke 2
+  glm::vec3 ecketwo = ecke3_-ecke2_;
+  glm::vec3 vptwo = p - ecke2_;
+  C=crossp(ecke2_,vptwo);
+  if(skalar(N,C)<0)return HelloHitty;
+
+  //ecke 3
+  glm::vec3 eckethree = ecke1_-ecke3_;
+  glm::vec3 vpthree = p - ecke3_;
+  C=crossp(ecke3_,vpthree);
+  if(skalar(N,C)<0)return HelloHitty;
+  glm::vec3 target{0.0,0.0,-5.0};//?? <<<<<<<<<<<<<<<<<<<<<<<<<<<!!!!!!!
+  glm::vec3 normale{0.0,0.0,1.0};//??<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!!!!!!!!!
+  Hit trifft;
+  trifft.hit_=true;
+  trifft.distance_=t;
+  trifft.target_=target;
+  trifft.normal_=normale;
+  trifft.sptr_=this;
+  return trifft;//<<<<<<<<<<<
+
+}
 /*bool rayTriangleIntersect( 
     const Vec3f &orig, const Vec3f &dir, 
     const Vec3f &v0, const Vec3f &v1, const Vec3f &v2, 
