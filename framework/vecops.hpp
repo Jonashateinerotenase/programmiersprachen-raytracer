@@ -17,4 +17,18 @@ inline float betrag(glm::vec3 const& vecci){
 inline skalar(glm::vec3 const& v1, glm::vec3 const& v2){
 	return (v1.x*v2.x)+(v1.y*v2.y)+(v1.z*v2.z);
 }
+inline glm::vec3 sub(glm::vec3 const& v1, glm::vec3 const& v2){
+	glm::vec3 temp;
+	temp.x=v1.x-v2.x;
+	temp.y=v1.y-v2.y;
+	temp.z=v1.z-v2.z;
+	return temp;
+}
+/*inline operator*(glm::vec3 const& v1, float a){
+	glm::vec3 temp;
+	temp.x=v1.x*a;
+	temp.y=v1.y*a;
+	temp.z=v1.z*a;
+	return temp;
+}*/
 #endif

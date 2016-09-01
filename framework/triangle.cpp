@@ -11,16 +11,22 @@ ecke3_{0.0f,1.0f,-2.0f}
 
 Triangle::Triangle(glm::vec3 const& ecke1, glm::vec3 const& ecke2, glm::vec3 const& ecke3):
 Shape(),
-ecke1_{ecke1.x,ecke1.y,ecke1.z},
+/*ecke1_{ecke1.x,ecke1.y,ecke1.z},
 ecke2_{ecke2.x,ecke2.y,ecke2.z},
-ecke3_{ecke3.x,ecke3.y,ecke3.z}
+ecke3_{ecke3.x,ecke3.y,ecke3.z}*/
+ecke1_{ecke1},
+ecke2_{ecke2},
+ecke3_{ecke3}
 {}
 
 Triangle::Triangle(glm::vec3 const& ecke1, glm::vec3 const& ecke2, glm::vec3 const& ecke3, std::string const& name, Material const& mat):
 Shape(name, mat),
-ecke1_{ecke1.x,ecke1.y,ecke1.z},
+/*ecke1_{ecke1.x,ecke1.y,ecke1.z},
 ecke2_{ecke2.x,ecke2.y,ecke2.z},
-ecke3_{ecke3.x,ecke3.y,ecke3.z}
+ecke3_{ecke3.x,ecke3.y,ecke3.z}*/
+ecke1_{ecke1},
+ecke2_{ecke2},
+ecke3_{ecke3}
 {}
 
 std::ostream& Triangle::print(std::ostream& os) const{
@@ -43,8 +49,52 @@ std::ostream& Triangle::print(std::ostream& os) const{
 }*/
 
 Hit Triangle::intersect(Ray const& ray) {
-  Hit HelloHitty;
+  Hit impact;
+  Hit noimpact;
+  glm::vec3 e1,e2;
+  glm::vec3 P,Q,T;
+  float det, inv_det, u, v;
+  float t;
+  float bias = 0.00009;
+
+  e1 = sub(ecke2_,ecke1_);
+  e2 = sub(ecke3_,ecke1_);
+
+  P = crossp(ray.direction,e2);
+  det = skalar(e1,P);
+  if(det > -bias && det < bias)return noimpact;
+  inv_det = 1.0f / det;
+  T = ray.origin-ecke1_;
+  u = skalar(T,P) * inv_det;
+  if(u < 0.0f || u > 1.0f)return noimpact;
+  Q = crossp(T,e1);
+  v = skalar(ray.direction,Q) * inv_det;
+  if (v < 0.0 || u + v > 1.0)return noimpact;
+  t = skalar(e2,Q) * inv_det;
+  
+  
+  
+  if (t > bias)
+  { 
+    float distance = t;
+    impact.distance_=t;
+    impact.target_  = ray.origin + (distance * glm::normalize(ray.direction));
+    glm::vec3 norm = crossp(ecke1_-ecke2_,ecke1_-ecke3_);
+    glm::normalize(norm);
+    impact.hit_=true;
+    impact.normal_=norm;
+    impact.sptr_=this;
+    //std::cout << "t: " << t << "\n";
+    return impact;
+    std::cout << "ende";
+    //std::cout << norm.x << norm.y << norm.z;
+    //taken from https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
+  }
+
+  return noimpact;
+ /* Hit HelloHitty;
   glm::vec3 norm = crossp(ecke1_-ecke2_,ecke1_-ecke3_);
+  //glm::normalize(norm);
   float d = skalar(norm , ray.direction);
   if(d != 0)
   {
@@ -64,7 +114,7 @@ Hit Triangle::intersect(Ray const& ray) {
       }
     }
   }
-  return HelloHitty;
+  return HelloHitty;*/
   /*glm::vec3 sub21{0.0f,0.0f,0.0f};
   sub21.x = ecke2_.x - ecke1_.x;
   sub21.y = ecke2_.y - ecke1_.y;

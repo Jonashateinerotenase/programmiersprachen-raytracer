@@ -63,6 +63,7 @@ void Renderer::render()
                 Hit hit = (*i)->intersect(camray);
 
                 if(hit.hit_ == true){
+                    //std::cout << hit.distance_ <<" hit distanz ist true \n";
                     if(hit.distance_ < shortest){
                         shortest = hit.distance_;
                         first_hit = hit.sptr_;
@@ -74,6 +75,11 @@ void Renderer::render()
                             std::max(-1.0f, std::min(1.0f, hit.normal_.y)) / 2.0f + 0.5f,
                             std::max(-1.0f, std::min(1.0f, hit.normal_.z)) / 2.0f + 0.5f
                         };*/
+                            /*p.color.r=1;
+                            p.color.g=0;
+                            p.color.b=0;*/
+                            //std::cout << "blub \n";
+                            write(p);
                     }
                 }
             }
