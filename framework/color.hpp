@@ -77,6 +77,15 @@ struct Color
 
     return tmp;
   }
+  friend Color operator*(double b, Color const& a)
+  {
+    auto tmp(a);
+    tmp.r = a.r * b;
+    tmp.g = a.g * b;
+    tmp.b = a.b * b;
+
+    return tmp;
+  }
 };
 
 #endif //#define BUW_COLOR_HPP

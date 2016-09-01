@@ -44,7 +44,7 @@ private:
 //  std::string filename_;
   PpmWriter ppm_;
   Scene scene_;
- 
+
 };
 
 #endif // #ifndef BUW_RENDERER_HPP

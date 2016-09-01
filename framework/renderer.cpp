@@ -30,10 +30,52 @@ Renderer::Renderer(Scene scene)
     ppm_(scene.xres_, scene.yres_, scene.filename)
     {}
 
+void Renderer::render()
+{
 
+    float pic_ymax =2/scene_.xres_*scene_.yres_;
+
+    float distance=1 /tan((scene_.camera.angle()*3.14159265)/180);
+    std::cout <<"min. Distanz: " <<distance << "\n";
+    int height_= scene_.yres_;
+    int width_= scene_.xres_;
+
+    float h = -height_/2;
+    for (unsigned y = 0; y < height_; ++y) {
+        //std::cout << y << "\n";
+
+
+            float w = -width_/2;
+        for (unsigned x = 0; x < width_; ++x) {
+//AA
+            float pixelwidth=2/width_;
+            glm::vec3 sp1 = {w/(width_/2)-0.25*pixelwidth,h/(height_/2)+0.25*pixelwidth,-distance};
+            glm::vec3 sp2 = {w/(width_/2)+0.25*pixelwidth,h/(height_/2)+0.25*pixelwidth,-distance};
+            glm::vec3 sp3 = {w/(width_/2)-0.25*pixelwidth,h/(height_/2)-0.25*pixelwidth,-distance};
+            glm::vec3 sp4 = {w/(width_/2)+0.25*pixelwidth,h/(height_/2)-0.25*pixelwidth,-distance};
+            Ray rsp1 = scene_.camera.castray(sp1);
+            Ray rsp2 = scene_.camera.castray(sp2);
+            Ray rsp3 = scene_.camera.castray(sp3);
+            Ray rsp4 = scene_.camera.castray(sp4);
+            Color sp1c = trace(rsp1);
+            Color sp2c = trace(rsp2);
+            Color sp3c = trace(rsp3);
+            Color sp4c = trace(rsp4);
+//            Ray camray{scene_.camera.pos(), onedirection};
+            Pixel p(x,y);
+//            Hit hitteter=kugel.intersect(camray);
+            p.color=0.25*sp1c+0.25*sp2c+0.25*sp3c+0.25*sp4c;
+            write(p);
+            ++w;
+        }
+        ++h;
+    }
+    ppm_.save(scene_.filename);
+    std::cout << "saved file in: " << scene_.filename << " amazing! \n";
+}
 
 //0.5 Alpha / 2 M_PI
-void Renderer::render()
+/*void Renderer::render()
 {
 
     float pic_ymax =2/scene_.xres_*scene_.yres_;
@@ -64,7 +106,7 @@ void Renderer::render()
     }
     ppm_.save(scene_.filename);
     std::cout << "saved file in: " << scene_.filename << " amazing! \n";
-//float pic_z =1/(0.5*1.0/*alpha*/);//alpha von der camera aus der scene "angle"
+//float pic_z =1/(0.5*1.0/*alpha*///);//alpha von der camera aus der scene "angle"
 //glm::vec3 p1{-1.0,};
 //  height_=(2/scene.width_);
 //prinzipieller aufbau
@@ -115,8 +157,8 @@ while (int x = 0; x < width; ++x)
         --h;
     }
     ppm_.save(scene_.filename);
-    std::cout << "saved file in: " << scene_.filename << " amazing! \n";*/
-}
+    std::cout << "saved file in: " << scene_.filename << " amazing! \n";
+}*/
 Color Renderer::trace(Ray const& ray){
 
     Shape* first_hit;
@@ -229,7 +271,7 @@ Color Renderer::shade(Ray const& ray, Hit const& hit, float depth_){
     if (hit.sptr_->getmaterial().reflectionvalue > 0.0f && depth < maxdepth)
     {
         ++depth;
-        std::cout<<"depth: "<<depth;
+        //std::cout<<"depth: "<<depth;
         float  angle3=glm::dot(norm,ray_inv_dir);
         glm::vec3 reflectionvec = 2.0f * angle3 * norm - ray_inv_dir;
         Ray reflectionray{hit.target_ + (glm::normalize(hit.normal_) * shadowbias),reflectionvec};
@@ -250,6 +292,8 @@ Color Renderer::shade(Ray const& ray, Hit const& hit, float depth_){
     return L_gesamt;
 
 }
+
+
 
 void Renderer::write(Pixel const& p)
 {
