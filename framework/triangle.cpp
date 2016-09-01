@@ -81,7 +81,7 @@ Hit Triangle::intersect(Ray const& ray) {
     impact.distance_=t;
     impact.target_  = ray.origin + (distance * glm::normalize(ray.direction));
     glm::vec3 norm = crossp(ecke1_-ecke2_,ecke1_-ecke3_);
-    glm::normalize(norm);
+    norm = glm::normalize(norm);
     impact.hit_=true;
     impact.normal_=norm;
     impact.sptr_=this;
