@@ -63,6 +63,7 @@ void Renderer::render()
                 Hit hit = (*i)->intersect(camray);
 
                 if(hit.hit_ == true){
+                    //std::cout << hit.distance_ <<" hit distanz ist true \n";
                     if(hit.distance_ < shortest){
                         shortest = hit.distance_;
                         first_hit = hit.sptr_;
