@@ -70,11 +70,11 @@ void Renderer::render()
                         //std::cout <<"Normalvektor: " << hit.normal_.x <<", " << hit.normal_.y <<", " << hit.normal_.z  << "\n";
 
                         p.color = shade(camray, hit);
-                        p.color = Color{
+                        /*p.color = Color{
                             std::max(-1.0f, std::min(1.0f, hit.normal_.x)) / 2.0f + 0.5f,
                             std::max(-1.0f, std::min(1.0f, hit.normal_.y)) / 2.0f + 0.5f,
                             std::max(-1.0f, std::min(1.0f, hit.normal_.z)) / 2.0f + 0.5f
-                        };
+                        };*/
                     }
                 }
             }
@@ -185,11 +185,11 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
             for (std::vector<std::shared_ptr<Shape>>::iterator j = scene_.shapes_ptr.begin();j != scene_.shapes_ptr.end();++j){
                 Hit shadowhit = (*j)->intersect(lightray);
 
+                std::cout << "shadowhit distance_ " << shadowhit.distance_ << " < " << sqrt(pow(lightvec.x, 2) + pow(lightvec.y, 2) + pow(lightvec.z,2)) << std::endl;
                 if(shadowhit.hit_ && shadowhit.distance_ < sqrt(pow(lightvec.x, 2) + pow(lightvec.y, 2) + pow(lightvec.z,2))){
                     Id = {0.0,0.0,0.0};
                     angle1 = 0.0;
                     angle2 = 0.0;
-                    //std::cout << "shadowhit distance_ " << shadowhit.distance_ << " < " << sqrt(pow(lightvec.x, 2) + pow(lightvec.y, 2) + pow(lightvec.z,2)) << std::endl;
 
                     break;
                 }
