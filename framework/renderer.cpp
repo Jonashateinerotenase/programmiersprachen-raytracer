@@ -117,8 +117,8 @@ while (int x = 0; x < width; ++x)
     ppm_.save(scene_.filename);
     std::cout << "saved file in: " << scene_.filename << " amazing! \n";*/
 }
-Color Renderer::trace(Ray const& ray){ 
-    
+Color Renderer::trace(Ray const& ray){
+
     Shape* first_hit;
     Color pc;
             double shortest = 999999.9;
@@ -132,19 +132,21 @@ Color Renderer::trace(Ray const& ray){
                         shortest = hit.distance_;
                         first_hit = hit.sptr_;
                         //std::cout <<"Normalvektor: " << hit.normal_.x <<", " << hit.normal_.y <<", " << hit.normal_.z  << "\n";
-                        
-                        pc = shade(ray, hit, depth);
+
+
                         /*p.color = Color{
                             std::max(-1.0f, std::min(1.0f, hit.normal_.x)) / 2.0f + 0.5f,
                             std::max(-1.0f, std::min(1.0f, hit.normal_.y)) / 2.0f + 0.5f,
                             std::max(-1.0f, std::min(1.0f, hit.normal_.z)) / 2.0f + 0.5f
                         };*/
-                            return pc;
+                        pc = shade(ray, hit, depth);
                     }
                 }
                 if(shortest == 999999.9){
                 pc = scene_.background;
+
             }
+
             }
             depth=0;
             return pc;
@@ -163,7 +165,7 @@ Color Renderer::shade(Ray const& ray, Hit const& hit, float depth_){
 
     float angle1;
     float angle2;
-    float shadowbias = 0.9f;
+    float shadowbias = 0.0009f;
 
     std::vector<Color> Id_vec;
     std::vector<float> a1_vec;
@@ -222,26 +224,31 @@ Color Renderer::shade(Ray const& ray, Hit const& hit, float depth_){
 
     }
 
-    
 
-    if (hit.sptr_->getmaterial().reflectionvalue > 0 && depth < maxdepth)
+
+    if (hit.sptr_->getmaterial().reflectionvalue > 0.0f && depth < maxdepth)
     {
         ++depth;
         std::cout<<"depth: "<<depth;
         float  angle3=glm::dot(norm,ray_inv_dir);
         glm::vec3 reflectionvec = 2.0f * angle3 * norm - ray_inv_dir;
-        Ray reflectionray{hit.target_,reflectionvec};
+        Ray reflectionray{hit.target_ + (glm::normalize(hit.normal_) * shadowbias),reflectionvec};
         Color reflectioncolor;
         reflectioncolor=trace(reflectionray);
         reflectioncolor=reflectioncolor * hit.sptr_->getmaterial().reflectionvalue;
         L_diff_spec=L_diff_spec*(1-hit.sptr_->getmaterial().reflectionvalue)+reflectioncolor;
-        
-    }
+
+
 
     L_gesamt = L_diff_spec + L_amb;
 //    std::cout << L_diff_spec << "<- diffspec, amblight-> " << L_amb << std::endl;
     return L_gesamt;
     //depth=0;
+    }
+
+    L_gesamt = L_diff_spec + L_amb;
+    return L_gesamt;
+
 }
 
 void Renderer::write(Pixel const& p)
