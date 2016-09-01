@@ -86,7 +86,7 @@ Hit Triangle::intersect(Ray const& ray) {
     impact.sptr_=this;
     //std::cout << "t: " << t << "\n";
     return impact;
-    std::cout << "ende";
+    //std::cout << "ende";
     //std::cout << norm.x << norm.y << norm.z;
     //taken from https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
   }
