@@ -9,7 +9,7 @@
 
 #include <math.h>
 #include "renderer.hpp"
-
+const unsigned maxdepth = 3;
 //#include "scene.hpp"
 
 Renderer::Renderer()
@@ -56,39 +56,7 @@ void Renderer::render()
 //            Ray camray{scene_.camera.pos(), onedirection};
             Pixel p(x,y);
 //            Hit hitteter=kugel.intersect(camray);
-            Shape* first_hit;
-            double shortest = 999999.9;
-
-            for (std::vector<std::shared_ptr<Shape>>::iterator i = scene_.shapes_ptr.begin();i != scene_.shapes_ptr.end();++i){
-                Hit hit = (*i)->intersect(camray);
-
-                if(hit.hit_ == true){
-                    //std::cout << hit.distance_ <<" hit distanz ist true \n";
-                    if(hit.distance_ < shortest){
-                        shortest = hit.distance_;
-                        first_hit = hit.sptr_;
-                        //std::cout <<"Normalvektor: " << hit.normal_.x <<", " << hit.normal_.y <<", " << hit.normal_.z  << "\n";
-
-                        p.color = shade(camray, hit);
-                        /*p.color = Color{
-                            std::max(-1.0f, std::min(1.0f, hit.normal_.x)) / 2.0f + 0.5f,
-                            std::max(-1.0f, std::min(1.0f, hit.normal_.y)) / 2.0f + 0.5f,
-                            std::max(-1.0f, std::min(1.0f, hit.normal_.z)) / 2.0f + 0.5f
-                        };*/
-                    }
-                }
-            }
-
-            if(shortest == 999999.9){
-                p.color = scene_.background;
-            }
-
-/*            if(y == 1){
-                if(x == 1){
-                    p.color = {1.0,0.0,0.0};
-                }
-            }*/
-
+            p.color=trace(camray);
             write(p);
             ++w;
         }
@@ -149,8 +117,40 @@ while (int x = 0; x < width; ++x)
     ppm_.save(scene_.filename);
     std::cout << "saved file in: " << scene_.filename << " amazing! \n";*/
 }
+Color Renderer::trace(Ray const& ray){ 
+    
+    Shape* first_hit;
+    Color pc;
+            double shortest = 999999.9;
 
-Color Renderer::shade(Ray const& ray, Hit const& hit){
+            for (std::vector<std::shared_ptr<Shape>>::iterator i = scene_.shapes_ptr.begin();i != scene_.shapes_ptr.end();++i){
+                Hit hit = (*i)->intersect(ray);
+
+                if(hit.hit_ == true){
+                    //std::cout << hit.distance_ <<" hit distanz ist true \n";
+                    if(hit.distance_ < shortest){
+                        shortest = hit.distance_;
+                        first_hit = hit.sptr_;
+                        //std::cout <<"Normalvektor: " << hit.normal_.x <<", " << hit.normal_.y <<", " << hit.normal_.z  << "\n";
+                        
+                        pc = shade(ray, hit, depth);
+                        /*p.color = Color{
+                            std::max(-1.0f, std::min(1.0f, hit.normal_.x)) / 2.0f + 0.5f,
+                            std::max(-1.0f, std::min(1.0f, hit.normal_.y)) / 2.0f + 0.5f,
+                            std::max(-1.0f, std::min(1.0f, hit.normal_.z)) / 2.0f + 0.5f
+                        };*/
+                            return pc;
+                    }
+                }
+                if(shortest == 999999.9){
+                pc = scene_.background;
+            }
+            }
+            depth=0;
+            return pc;
+
+}
+Color Renderer::shade(Ray const& ray, Hit const& hit, float depth_){
     Color ka = hit.sptr_->getmaterial().ka;
     Color kd = hit.sptr_->getmaterial().kd;
     Color ks = hit.sptr_->getmaterial().ks;
@@ -222,12 +222,26 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
 
     }
 
+    
+
+    if (hit.sptr_->getmaterial().reflectionvalue > 0 && depth < maxdepth)
+    {
+        ++depth;
+        std::cout<<"depth: "<<depth;
+        float  angle3=glm::dot(norm,ray_inv_dir);
+        glm::vec3 reflectionvec = 2.0f * angle3 * norm - ray_inv_dir;
+        Ray reflectionray{hit.target_,reflectionvec};
+        Color reflectioncolor;
+        reflectioncolor=trace(reflectionray);
+        reflectioncolor=reflectioncolor * hit.sptr_->getmaterial().reflectionvalue;
+        L_diff_spec=L_diff_spec*(1-hit.sptr_->getmaterial().reflectionvalue)+reflectioncolor;
+        
+    }
+
     L_gesamt = L_diff_spec + L_amb;
-
-
 //    std::cout << L_diff_spec << "<- diffspec, amblight-> " << L_amb << std::endl;
     return L_gesamt;
-
+    //depth=0;
 }
 
 void Renderer::write(Pixel const& p)
