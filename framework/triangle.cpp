@@ -56,27 +56,32 @@ Hit Triangle::intersect(Ray const& ray) {
   glm::vec3 P,Q,T;
   float det, inv_det, u, v;
   float t;
-  float bias = 0.00009;//0.00009
+  float bias = 0.000001;//0.00009
 
   e1 = sub(ecke2_,ecke1_);
   e2 = sub(ecke3_,ecke1_);
-  P = crossp(glm::normalize(ray.direction),e2);
+  /*std::cout /*<< "Edge 1: "<< "["<<ecke1_.x<<","<<ecke1_.y<<","<<ecke1_.z<<"]\n"
+            << "Edge 2: "<< "["<<ecke2_.x<<","<<ecke2_.y<<","<<ecke2_.z<<"]\n"
+            << "Edge 3: "<< "["<<ecke3_.x<<","<<ecke3_.y<<","<<ecke3_.z<<"]\n"
+            <<"Edge 1["<<e1.x<<"|"<< e1.y <<"|"<<e1.z<<"]\n"
+            <<"Edge 2["<<e2.x<<"|"<< e2.y <<"|"<<e2.z<<"]\n";*/
+  P = crossp(ray.direction,e2);
   det = skalar(e1,P);
-  if(det > -bias && det < bias)return noimpact;
+  if(/*det > -bias && */det < bias)return noimpact;
   inv_det = 1.0f / det;
   T = sub(ray.origin,ecke1_);
-  u = skalar(T,P) * inv_det;
-  if(u < 0.0f || u > 1.0f)return noimpact;
+  u = skalar(T,P);// * inv_det;
+  if(u < 0.0f || u > det/*1.0f*/)return noimpact;
   Q = crossp(T,e1);
-  v = skalar(glm::normalize(ray.direction),Q) * inv_det;
+  v = skalar(ray.direction,Q);// * inv_det;
   if (v < 0.0 || u + v > 1.0)return noimpact;
-  t = skalar(e2,Q) * inv_det;
+  t = skalar(Q,e2) * inv_det;//t = skalar(e2,Q) * inv_det;
 
   if (t > bias)
   {
     float distance = t;
     impact.distance_=t;
-    impact.target_  = ray.origin + (distance * glm::normalize(ray.direction));
+    impact.target_  = ray.origin + (distance * ray.direction);
     glm::vec3 norm = crossp(ecke1_-ecke2_,ecke1_-ecke3_);
     norm = glm::normalize(norm);
     impact.hit_=true;

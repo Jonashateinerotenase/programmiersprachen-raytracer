@@ -67,6 +67,7 @@ Scene load_sdf_file(std::string const& filename) {
 
 
                     ss>>mat.m;
+                    ss>>mat.reflectionvalue;
 
 
                     scene.materials.insert({mat.name, mat});

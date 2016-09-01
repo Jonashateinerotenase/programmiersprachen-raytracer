@@ -27,14 +27,15 @@ public:
 
 
   void render();
-  Color shade(Ray const& ray, Hit const& hit);
+  Color shade(Ray const& ray, Hit const& hit, float depth);
+  Color trace(Ray const& ray);
   void write(Pixel const& p);
 
   inline std::vector<Color> const& colorbuffer() const
   {
     return colorbuffer_;
   }
-
+ int depth=0;
 private:
 
 //  int width_;
@@ -43,6 +44,7 @@ private:
 //  std::string filename_;
   PpmWriter ppm_;
   Scene scene_;
+ 
 };
 
 #endif // #ifndef BUW_RENDERER_HPP
