@@ -36,7 +36,7 @@ void Renderer::render()
     float pic_ymax =2/scene_.xres_*scene_.yres_;
 
     float distance=1 /tan((scene_.camera.angle()*3.14159265)/180);
-    std::cout <<"min. Distanz: " <<distance << "\n";
+    //std::cout <<"min. Distanz: " <<distance << "\n";
     int height_= scene_.yres_;
     int width_= scene_.xres_;
 
@@ -48,11 +48,13 @@ void Renderer::render()
             float w = -width_/2;
         for (unsigned x = 0; x < width_; ++x) {
 //AA
-            float pixelwidth=2/width_;
+            float pixelwidth=2.0/width_;
+            //std::cout << pixelwidth << "pixelwidth \n";
             glm::vec3 sp1 = {w/(width_/2)-0.25*pixelwidth,h/(height_/2)+0.25*pixelwidth,-distance};
             glm::vec3 sp2 = {w/(width_/2)+0.25*pixelwidth,h/(height_/2)+0.25*pixelwidth,-distance};
             glm::vec3 sp3 = {w/(width_/2)-0.25*pixelwidth,h/(height_/2)-0.25*pixelwidth,-distance};
             glm::vec3 sp4 = {w/(width_/2)+0.25*pixelwidth,h/(height_/2)-0.25*pixelwidth,-distance};
+            //std::cout << sp1.x << " = (?)" << sp2.x << " = (?)" << sp3.x << " = (?)" << sp4.x << "\n";
             Ray rsp1 = scene_.camera.castray(sp1);
             Ray rsp2 = scene_.camera.castray(sp2);
             Ray rsp3 = scene_.camera.castray(sp3);
@@ -64,6 +66,7 @@ void Renderer::render()
 //            Ray camray{scene_.camera.pos(), onedirection};
             Pixel p(x,y);
 //            Hit hitteter=kugel.intersect(camray);
+            //if (sp1c != sp2c || sp1c != sp2c ||sp1c != sp3c || sp1c != sp4c) std::cout << sp1c << ", " << sp2c << ", " << sp3c << ", " << sp4c <<"\n";
             p.color=0.25*sp1c+0.25*sp2c+0.25*sp3c+0.25*sp4c;
             write(p);
             ++w;
