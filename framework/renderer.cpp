@@ -67,19 +67,14 @@ void Renderer::render()
                     if(hit.distance_ < shortest){
                         shortest = hit.distance_;
                         first_hit = hit.sptr_;
-                        //std::cout <<"Normalvektor: " << hit.normal_.x <<", " << hit.normal_.y <<", " << hit.normal_.z  << "\n";
+                        std::cout <<"Normalvektor: " << hit.normal_.x <<", " << hit.normal_.y <<", " << hit.normal_.z  << "\n";
 
                         p.color = shade(camray, hit);
-                        /*p.color = Color{
+                        p.color = Color{
                             std::max(-1.0f, std::min(1.0f, hit.normal_.x)) / 2.0f + 0.5f,
                             std::max(-1.0f, std::min(1.0f, hit.normal_.y)) / 2.0f + 0.5f,
                             std::max(-1.0f, std::min(1.0f, hit.normal_.z)) / 2.0f + 0.5f
-                        };*/
-                            /*p.color.r=1;
-                            p.color.g=0;
-                            p.color.b=0;*/
-                            //std::cout << "blub \n";
-                            write(p);
+                        };
                     }
                 }
             }
