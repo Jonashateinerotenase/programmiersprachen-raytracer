@@ -56,24 +56,21 @@ Hit Triangle::intersect(Ray const& ray) {
   glm::vec3 P,Q,T;
   float det, inv_det, u, v;
   float t;
-  float bias = 0.00009;
+  float bias = 0.00009;//0.00009
 
   e1 = sub(ecke2_,ecke1_);
   e2 = sub(ecke3_,ecke1_);
-
-  P = crossp(ray.direction,e2);
+  P = crossp(glm::normalize(ray.direction),e2);
   det = skalar(e1,P);
   if(det > -bias && det < bias)return noimpact;
   inv_det = 1.0f / det;
-  T = ray.origin-ecke1_;
+  T = sub(ray.origin,ecke1_);
   u = skalar(T,P) * inv_det;
   if(u < 0.0f || u > 1.0f)return noimpact;
   Q = crossp(T,e1);
-  v = skalar(ray.direction,Q) * inv_det;
+  v = skalar(glm::normalize(ray.direction),Q) * inv_det;
   if (v < 0.0 || u + v > 1.0)return noimpact;
   t = skalar(e2,Q) * inv_det;
-
-
 
   if (t > bias)
   {
@@ -93,6 +90,7 @@ Hit Triangle::intersect(Ray const& ray) {
   }
 
   return noimpact;
+}
 
  /* Hit HelloHitty;
   glm::vec3 norm = crossp(ecke1_-ecke2_,ecke1_-ecke3_);
@@ -167,7 +165,7 @@ Hit Triangle::intersect(Ray const& ray) {
   trifft.sptr_=this;
   return trifft;*/
 
-}
+
 /*bool rayTriangleIntersect(
     const Vec3f &orig, const Vec3f &dir,
     const Vec3f &v0, const Vec3f &v1, const Vec3f &v2,
