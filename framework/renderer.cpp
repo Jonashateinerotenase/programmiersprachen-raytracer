@@ -185,7 +185,7 @@ Color Renderer::shade(Ray const& ray, Hit const& hit){
             for (std::vector<std::shared_ptr<Shape>>::iterator j = scene_.shapes_ptr.begin();j != scene_.shapes_ptr.end();++j){
                 Hit shadowhit = (*j)->intersect(lightray);
 
-                std::cout << "shadowhit distance_ " << shadowhit.distance_ << " < " << sqrt(pow(lightvec.x, 2) + pow(lightvec.y, 2) + pow(lightvec.z,2)) << std::endl;
+                //std::cout << "shadowhit distance_ " << shadowhit.distance_ << " < " << sqrt(pow(lightvec.x, 2) + pow(lightvec.y, 2) + pow(lightvec.z,2)) << std::endl;
                 if(shadowhit.hit_ && shadowhit.distance_ < sqrt(pow(lightvec.x, 2) + pow(lightvec.y, 2) + pow(lightvec.z,2))){
                     Id = {0.0,0.0,0.0};
                     angle1 = 0.0;
