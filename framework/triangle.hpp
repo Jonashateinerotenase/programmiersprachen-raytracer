@@ -13,7 +13,7 @@ public:
   Triangle();
   Triangle(glm::vec3 const& ecke1, glm::vec3 const& ecke2, glm::vec3 const& ecke3);
   Triangle(glm::vec3 const& ecke1, glm::vec3 const& ecke2, glm::vec3 const& ecke3, std::string const& name, Material const& mat);
-  
+
   Hit intersect(Ray const& ray) override;
   std::ostream& print(std::ostream& os) const override;
 
